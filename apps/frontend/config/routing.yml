@@ -1,0 +1,22 @@
+# You can find more information about this file on the symfony website:
+# http://www.symfony-project.org/reference/1_4/en/10-Routing
+
+# default rules
+
+ajax_list:
+  url: /post/:lat.:lat2/:lng.:lng2
+  param: { module: post, action: index}
+  
+homepage:
+  url:   /
+  param: { module: default, action: index }
+
+
+# generic rules
+# please, remove them by adding more specific rules
+default_index:
+  url:   /:module
+  param: { action: index }
+
+default:
+  url:   /:module/:action/*

@@ -1,0 +1,22 @@
+Post:
+  connection: doctrine
+  actAs:
+    Timestampable:
+    Geographical:
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    ip:
+      type: string(16)
+      fixed: false
+      unsigned: true
+      primary: false
+      notnull: true
+      autoincrement: false
+    text: string(255)
+    accuracy: int
+    
