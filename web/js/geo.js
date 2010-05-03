@@ -4,7 +4,6 @@ function geoHandler(location) {
 	message.innerHTML+="<p>Longitude: " + location.coords.longitude + "</p>";
 	message.innerHTML+="<p>Latitude: " + location.coords.latitude + "</p>";
 	message.innerHTML+="<p>Accuracy: " + location.coords.accuracy + "</p>";*/
-	console.log("Here:", location.coords.longitude);
 	$("#post_longitude").attr("value", location.coords.longitude);
 	$("#post_latitude").attr("value", location.coords.latitude);
 	$("#post_accuracy").attr("value", location.coords.accuracy);
@@ -16,11 +15,8 @@ function geoHandler(location) {
 
 
 var guff_geo = {
-	
 
-	
 	init:function() {	
-		console.log("YO:");
 		$("#form_div").hide();
 		navigator.geolocation.getCurrentPosition(geoHandler);
 	}
