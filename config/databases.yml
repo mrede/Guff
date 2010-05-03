@@ -8,3 +8,9 @@ all:
       dsn:      mysql:host=localhost;dbname=guff
       username: root
       password: 
+
+stage:
+  doctrine:
+    param:
+      username: guff
+      password: guff
