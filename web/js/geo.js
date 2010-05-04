@@ -18,6 +18,12 @@ function geoHandler(location) {
 	$("#dump").append("Lat: "+location.coords.latitude+", Lng: "+location.coords.longitude+", Acc:"+location.coords.accuracy)
 }
 
+function updatePos(location)
+{
+	console.log("ASD");
+	$("#dump").append("Lat: "+location.coords.latitude+", Lng: "+location.coords.longitude+", Acc:"+location.coords.accuracy)
+}
+
 function errorHandler(err) {
 	//try again
 	alert("ERROR"+err);
@@ -28,9 +34,11 @@ var guff_geo = {
 
 	init:function() {	
 		$("#form_div").hide();
-		navigator.geolocation.getCurrentPosition(geoHandler, errorHandler, {
-			enableHighAccuracy: true
-		});
+	//	navigator.geolocation.getCurrentPosition(geoHandler, errorHandler, {
+	//		enableHighAccuracy: true
+//		});
+		
+		navigator.geolocation.watchPosition(updatePos);
 	}
 	
 	
