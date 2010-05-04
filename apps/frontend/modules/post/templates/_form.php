@@ -25,4 +25,5 @@
       </tr>
     </tbody>
   </table>
+	<img id='img' src="" alt="map" />
 </form>
