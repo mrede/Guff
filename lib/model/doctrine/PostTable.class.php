@@ -12,7 +12,7 @@ class PostTable extends Doctrine_Table
 	public function getNearby($lat, $lng)
 	{
 
-		$defaultRadius = 1;
+		$defaultRadius = 0.05;
 
 		$q = $this->createQuery()
 					->from('Post a')
