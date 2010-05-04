@@ -16,12 +16,19 @@ function geoHandler(location) {
 	$("#messages").load("/post/"+location.coords.latitude+"/"+location.coords.longitude);
 }
 
+function errorHandler(err) {
+	//try again
+	alert("ERROR"+err);
+}
+
 
 var guff_geo = {
 
 	init:function() {	
 		$("#form_div").hide();
-		navigator.geolocation.getCurrentPosition(geoHandler);
+		navigator.geolocation.getCurrentPosition(geoHandler, errorHandler, {
+			enableHighAccuracy: true
+		});
 	}
 	
 	
