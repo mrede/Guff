@@ -25,4 +25,12 @@ class PostTable extends Doctrine_Table
 		return $q->execute();
 		
 	}
+	
+	public function getRecent()
+	{
+		$q = $this->createQuery()
+						->limit(20)
+						->orderBy("created_at desc");
+		return $q->execute();
+	}
 }

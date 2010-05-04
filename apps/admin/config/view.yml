@@ -14,7 +14,6 @@ default:
 
   stylesheets:    [main.css]
 
-  javascripts:    []
-
+  javascripts:    [jquery-1.4.2.min.js, http://maps.google.com/maps/api/js?sensor=false]
   has_layout:     true
   layout:         layout
