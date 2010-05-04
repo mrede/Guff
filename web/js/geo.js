@@ -14,6 +14,8 @@ function geoHandler(location) {
 	$("#form_div").show();
 	//Get messages
 	$("#messages").load("/post/"+location.coords.latitude+"/"+location.coords.longitude);
+	
+	$("#dump").append("Lat: "+location.coords.latitude+", Lng: "+location.coords.longitude+", Acc:"+location.coords.accuracy)
 }
 
 function errorHandler(err) {

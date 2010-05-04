@@ -27,3 +27,5 @@
   </table>
 	<img id='img' src="" alt="map" />
 </form>
+<div id='dump'>
+	</div>
