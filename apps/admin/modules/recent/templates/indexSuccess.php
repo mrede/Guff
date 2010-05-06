@@ -18,7 +18,7 @@ var nf_maps = {
 
 
 		var myOptions = {
-			zoom: 9,
+			zoom: 14,
 			center: new google.maps.LatLng(<?php echo $centerLat?>, <?php echo $centerLng?>),
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 		}
