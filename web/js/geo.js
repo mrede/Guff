@@ -37,7 +37,7 @@ var guff_geo = {
 		$("#form_div").hide();
 		navigator.geolocation.getCurrentPosition(geoHandler, errorHandler, {
 			enableHighAccuracy: true,
-			maximumAge: 60
+			maximumAge: 0
 		});
 		
 	
