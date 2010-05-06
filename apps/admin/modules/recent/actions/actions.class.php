@@ -20,7 +20,5 @@ class recentActions extends sfActions
     //Get most recent posts
 		$this->posts = PostTable::getInstance()->getRecent();
 		$this->centerLat = $this->centerLng = 0;
-		
-		print str_replace(array("\r\n", "\n", "\r"), "", $this->posts[5]->getText());
   }
 }
