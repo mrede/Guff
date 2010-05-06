@@ -35,11 +35,14 @@ var guff_geo = {
 
 	init:function() {	
 		$("#form_div").hide();
-		navigator.geolocation.getCurrentPosition(geoHandler, errorHandler, {
+		/*navigator.geolocation.getCurrentPosition(geoHandler, errorHandler, {
+			enableHighAccuracy: true,
+			maximumAge: 0
+		});*/
+		var watchId = navigator.geolocation.watchPosition(geoHandler, errorHandler, {
 			enableHighAccuracy: true,
 			maximumAge: 0
 		});
-		
 	
 	}
 	
