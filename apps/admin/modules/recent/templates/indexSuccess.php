@@ -69,7 +69,7 @@ var nf_maps = {
 			});
 			
 			//map.setZoom(map.getBoundsZoomLevel(bounds));
-			      map.setCenter(bounds.getCenter());
+
 		}
 	}
 	
