@@ -55,7 +55,7 @@ var nf_maps = {
 	    });
 	
 			bounds.extend(marker.getPosition());
-	  
+	  	map.fitBounds(bounds);
 			google.maps.event.addListener(marker, 'click', function(e,x) {
 				console.log("locations", locations[0])
 				infowindow.setContent(locations[this.getZIndex()-1][0]);//+this.getZIndex()).html());
