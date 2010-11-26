@@ -5,26 +5,16 @@
 <?php if (!$form->getObject()->isNew()): ?>
 <input type="hidden" name="sf_method" value="put" />
 <?php endif; ?>
-  <table id='form_div'>
-    <tfoot>
-      <tr>
-        <td colspan="2">
-					<?php echo $form->renderHiddenFields()?>
-          <input id='submit_but' type="submit" value="Post" disabled='true'/>
-        </td>
-      </tr>
-    </tfoot>
-    <tbody>
-      <?php echo $form->renderGlobalErrors() ?>
-      <tr>
-        <th><?php echo $form['text']->renderLabel() ?></th>
-        <td>
+  
+  <?php echo $form->renderGlobalErrors() ?>
+
+  <?php echo $form['text']->renderLabel() ?><br />
+      
           <?php echo $form['text']->renderError() ?>
           <?php echo $form['text'] ?>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-	<img id='img' src="" alt="map" />
+<input id='submit_but' class='button' type="submit" value="guff »" disabled='true'/>
+					<?php echo $form->renderHiddenFields()?>
+          
+      
 </form>
 <div id='dump'>Locating you</div>

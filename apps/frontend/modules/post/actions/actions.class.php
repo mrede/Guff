@@ -13,9 +13,7 @@ class postActions extends sfActions
   public function executeIndex(sfWebRequest $request)
   {
    
-		$lat = $request->getParameter("lat").".".$request->getParameter("lat2");
-		$lng = $request->getParameter("lng").".".$request->getParameter("lng2");
-		$this->posts = Doctrine::getTable('Post')->getNearby($lat, $lng);
+		
 
 
   }
@@ -36,7 +34,18 @@ class postActions extends sfActions
     $this->setTemplate('new');
   }
 
+	public function executeMessages(sfWebRequest $request)
+	{
+		$lat = $request->getParameter("lat").".".$request->getParameter("lat2");
+		$lng = $request->getParameter("lng").".".$request->getParameter("lng2");
+		$this->posts = Doctrine::getTable('Post')->getNearby($lat, $lng);
+	}
 
+	public function executeLoadMap(	sfWebRequest $request)
+  {
+		$this->form = new PostForm();
+	}
+	
   protected function processForm(sfWebRequest $request, sfForm $form)
   {
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
