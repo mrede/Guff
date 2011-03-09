@@ -1,4 +1,22 @@
-var test = 1;
+var watchId;
+
+
+
+function updatePos(location)
+{
+	$('#form_holder').slideDown();
+	guff_geo.loadMap();
+	//console.log("Position located", "Lat: "+location.coords.latitude+", Lng: "+location.coords.longitude+", Acc:"+location.coords.accuracy);
+	$("#debug").append("Lat: "+location.coords.latitude+", Lng: "+location.coords.longitude+", Acc:"+location.coords.accuracy)
+	$('#map_img').attr('src', 'image.jpg').load(function() {
+	alert('Image Loaded');
+	});
+}
+
+
+
+
+var test = 0;
 
 var guff_geo = {
 	
@@ -18,7 +36,6 @@ var guff_geo = {
     	{
     		//cancel watch
     		navigator.geolocation.clearWatch(watchId);
-
     	}
     	if (location.coords.accuracy<100)
     	{
@@ -33,16 +50,11 @@ var guff_geo = {
     			$('#ajax_loader').hide();
     			$("#form_holder").slideDown();
     		});
-            
+
     		//Get messages
     		$("#messages").load("/post/messages/"+location.coords.latitude+"/"+location.coords.longitude);
 
     		$("#dump").html("Lat: "+location.coords.latitude+", Lng: "+location.coords.longitude+", Acc:"+location.coords.accuracy)
-    		
-    		navigator.geolocation.watchPosition(guff_geo.geoHandler, guff_geo.errorHandler, {
-    			enableHighAccuracy: true,
-    			maximumAge: 0
-    		});
     	}
     	else
     	{
@@ -53,6 +65,13 @@ var guff_geo = {
     errorHandler:function(err) {
     	//try again
     	if (err.code>0) {
+    	    if (err.code==1) {
+    	        $("#geo-fail").append("DENIED");
+	        } else if (err.code==2) {
+        	    $("#geo-fail").append("Position Unavailable");
+    	    } else if (err.code==3) {
+    	        $("#geo-fail").append("Timeout");
+    	    }
     	    guff_geo.fail();
         }
     },
