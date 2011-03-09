@@ -54,7 +54,12 @@ var guff_geo = {
     		//Get messages
     		$("#messages").load("/post/messages/"+location.coords.latitude+"/"+location.coords.longitude);
 
-    		$("#dump").html("Lat: "+location.coords.latitude+", Lng: "+location.coords.longitude+", Acc:"+location.coords.accuracy)
+    		$("#dump").append("Lat: "+location.coords.latitude+", Lng: "+location.coords.longitude+", Acc:"+location.coords.accuracy)
+    		
+    		navigator.geolocation.getCurrentPosition(guff_geo.geoHandler, guff_geo.errorHandler, {
+    			enableHighAccuracy: true,
+    			maximumAge: 0
+    		});
     	}
     	else
     	{
