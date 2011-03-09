@@ -56,10 +56,6 @@ var guff_geo = {
 
     		$("#dump").append("Lat: "+location.coords.latitude+", Lng: "+location.coords.longitude+", Acc:"+location.coords.accuracy)
     		
-    		navigator.geolocation.getCurrentPosition(guff_geo.geoHandler, guff_geo.errorHandler, {
-    			enableHighAccuracy: true,
-    			maximumAge: 0
-    		});
     	}
     	else
     	{
