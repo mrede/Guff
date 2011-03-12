@@ -8,9 +8,9 @@ function updatePos(location)
 	guff_geo.loadMap();
 	//console.log("Position located", "Lat: "+location.coords.latitude+", Lng: "+location.coords.longitude+", Acc:"+location.coords.accuracy);
 	$("#debug").append("Lat: "+location.coords.latitude+", Lng: "+location.coords.longitude+", Acc:"+location.coords.accuracy)
-	$('#map_img').attr('src', 'image.jpg').load(function() {
+	/*$('#map_img').attr('src', 'image.jpg').load(function() {
 	alert('Image Loaded');
-	});
+	});*/
 }
 
 
