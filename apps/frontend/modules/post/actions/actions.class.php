@@ -30,8 +30,9 @@ class postActions extends sfActions
     $this->form = new PostForm();
 
     $this->processForm($request, $this->form);
-
+    $this->setLayout(false);
     $this->setTemplate('new');
+    
   }
 
 	public function executeMessages(sfWebRequest $request)
@@ -63,7 +64,10 @@ class postActions extends sfActions
     {
       $post = $form->save();
 
-      $this->redirect('post/new?id='.$post->getId());
+      if (!$request->isXmlHttpRequest())
+      {
+          $this->redirect('post/new?id='.$post->getId());
+      }
     }
   }
 }

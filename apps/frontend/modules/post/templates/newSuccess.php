@@ -11,6 +11,9 @@
 		<?php include_partial("form", array('form' => $form))?>
 	</div>
 	<div id='messages'>
+	    <h2>Messages</h2>
+	    <ul id='msgs'>
+	    </ul>
 	</div>
 	<div id='debug'>
 	
