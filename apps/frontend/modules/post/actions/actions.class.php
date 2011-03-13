@@ -38,7 +38,17 @@ class postActions extends sfActions
 	{
 		$lat = $request->getParameter("lat").".".$request->getParameter("lat2");
 		$lng = $request->getParameter("lng").".".$request->getParameter("lng2");
-		$this->posts = Doctrine::getTable('Post')->getNearby($lat, $lng);
+		$posts = Doctrine::getTable('Post')->getNearby($lat, $lng);
+		$this->setLayout(false);
+		
+		$this->json = '{"posts": [';
+		foreach ($posts as $p)
+		{
+		    $this->json .= json_encode($p).',';
+		}
+		//drop last
+		$this->json  = substr($this->json, 0, -1);
+		$this->json .=']} ';
 	}
 
 	public function executeLoadMap(	sfWebRequest $request)

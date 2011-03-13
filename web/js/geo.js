@@ -16,7 +16,7 @@ function updatePos(location)
 
 
 
-var test = 0;
+var test = 1;
 
 var guff_geo = {
 	
@@ -52,7 +52,23 @@ var guff_geo = {
     		});
 
     		//Get messages
-    		$("#messages").load("/post/messages/"+location.coords.latitude+"/"+location.coords.longitude);
+    		//$("#messages").load("/post/messages/"+location.coords.latitude+"/"+location.coords.longitude);
+    		$.ajax({
+    		    url: "/post/messages/"+location.coords.latitude+"/"+location.coords.longitude,
+    		    type: 'get',
+    		    dataType: 'json',
+    		    success: function(data, status) {
+    		        //get msgs ul
+    		        var list = $('#msgs');
+    		        var append = '';
+    		        console.log(data.posts.length);
+    		        $(data.posts).each(function() {
+    		            console.log(this);
+    		            append += '<li>'+this.text+'</li>';
+    		        });
+    		        list.append(append);
+    		    },
+    		})
 
     		$("#dump").append("Lat: "+location.coords.latitude+", Lng: "+location.coords.longitude+", Acc:"+location.coords.accuracy)
     		
