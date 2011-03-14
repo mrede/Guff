@@ -4,13 +4,13 @@ var watchId;
 
 function updatePos(location)
 {
-	$('#form_holder').slideDown();
+	//$('#form_holder').slideDown();
 	guff_geo.loadMap();
 	//console.log("Position located", "Lat: "+location.coords.latitude+", Lng: "+location.coords.longitude+", Acc:"+location.coords.accuracy);
-	$("#debug").append("Lat: "+location.coords.latitude+", Lng: "+location.coords.longitude+", Acc:"+location.coords.accuracy)
-	/*$('#map_img').attr('src', 'image.jpg').load(function() {
-	alert('Image Loaded');
-	});*/
+	//$("#debug").append("Lat: "+location.coords.latitude+", Lng: "+location.coords.longitude+", Acc:"+location.coords.accuracy)
+	$('#map_img').attr('src', 'image.jpg').load(function() {
+		alert('Image Loaded');
+	});
 }
 
 
@@ -24,14 +24,12 @@ var guff_geo = {
 	 * Load the post form
 	 */
 	loadMap:function() {
-		
-		$("#form_holder").load('/post/ajaxForm', function(data, status, response) { 
-		});
+		$("#form_holder").load('/post/ajaxForm', function(data, status, response) { });
 	},
 	
 	geoHandler:function(location) {
     	//Check acc before bothering
-    //	console.log("Location", location);
+    	//console.log("Location", location);
     	if (location.coords.accuracy<50)
     	{
     		//cancel watch
@@ -45,10 +43,12 @@ var guff_geo = {
     		$("#submit_but").removeAttr("disabled");
 
     		//get image
-    		$("#map_img").attr("src", "http://maps.google.com/maps/api/staticmap?center="+location.coords.latitude+","+location.coords.longitude+"&zoom=15&size=400x300&maptype=roadmap&markers=color:blue|"+location.coords.latitude+","+location.coords.longitude+"&sensor=false").load(function() {
-    			$(this).fadeIn();
-    			$('#ajax_loader').hide();
-    			$("#form_holder").slideDown();
+			
+    		$("#map_img").attr("src", "http://maps.google.com/maps/api/staticmap?center="+location.coords.latitude+","+location.coords.longitude+"&zoom=15&size=290x200&maptype=roadmap&markers=color:blue|"+location.coords.latitude+","+location.coords.longitude+"&sensor=false").load(function() {
+    			$.mobile.pageLoading(true);
+				//$(this).fadeIn();
+    			//$('#ajax_loader').hide();
+    			//$("#form_holder").slideDown();
     		});
 
     		//Get messages
@@ -70,8 +70,8 @@ var guff_geo = {
     		    },
     		})
 
-    		$("#dump").append("Lat: "+location.coords.latitude+", Lng: "+location.coords.longitude+", Acc:"+location.coords.accuracy)
-    		
+    		//$("#dump").append("Lat: "+location.coords.latitude+", Lng: "+location.coords.longitude+", Acc:"+location.coords.accuracy)
+    		$("#accuracy").text(location.coords.accuracy);
     	}
     	else
     	{
@@ -125,4 +125,41 @@ var guff_geo = {
 	
 }
 
-$(document).ready(guff_geo.init);
+$(document).ready(function(){
+	var max_length = 149;
+
+
+	whenkeydown = function(max_length)
+	{
+	    $("#post_text").unbind().keyup(function()
+	    {
+	        //check if the appropriate text area is being typed into
+	        if(document.activeElement.id === "post_text")
+	        {
+	            //get the data in the field
+	            var text = $(this).val();
+
+	            //set number of characters
+	            var numofchars = text.length;
+
+	            //set the chars left
+	            var chars_left = max_length - numofchars;
+
+	            //check if we are still within our maximum number of characters or not
+	            if(numofchars <= max_length)
+	            {
+	                //set the length of the text into the counter span
+	                $("#counter").html("").html(chars_left).css("color", "#000000");
+	            }
+	            else
+	            {
+	                //style numbers in red
+	                $("#counter").html("").html(chars_left).css("color", "#FF0000");
+	            }
+	        }
+	    });
+	}
+	//run listen key press
+    whenkeydown(max_length);
+	guff_geo.init
+});

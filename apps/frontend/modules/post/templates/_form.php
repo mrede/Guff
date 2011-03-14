@@ -8,13 +8,13 @@
   
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php echo $form['text']->renderLabel() ?><br />
-      
+  <?php echo $form['text']->renderLabel('Post a message [<span id="counter">149</span> characters]') ?><br/>
+  
           <?php echo $form['text']->renderError() ?>
-          <?php echo $form['text'] ?>
-<input id='submit_but' class='button' type="submit" value="guff »" disabled='true'/>
-					<?php echo $form->renderHiddenFields()?>
+          <?php echo $form['text'] ?><br/>
+		  <strong>100m range for 2hrs</strong> / Accuracy: <span id="accuracy"></span><br/>
+		  <input id='submit_but' data-inline="true" data-theme="b" class='button' type="submit" value="send"/>
+		   <?php echo $form->renderHiddenFields()?>
           
       
 </form>
-<div id='dump'>Locating you</div>

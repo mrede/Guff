@@ -5,7 +5,7 @@ all:
   doctrine:
     class: sfDoctrineDatabase
     param:
-      dsn:      mysql:host=localhost;dbname=guff
+      dsn:      mysql:host=127.0.0.1;dbname=guff
       username: root
       password: 
 
