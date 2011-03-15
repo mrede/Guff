@@ -16,7 +16,8 @@ function updatePos(location)
 
 
 
-var test = 1;
+var test = 0;
+var screen_width;
 
 var guff_geo = {
 	
@@ -34,21 +35,24 @@ var guff_geo = {
     	{
     		//cancel watch
     		navigator.geolocation.clearWatch(watchId);
+			//cancel page loading
+			$.mobile.pageLoading(true);
     	}
     	if (location.coords.accuracy<100)
     	{
+			//cancel page loading
+
+			
     		$("#post_longitude").attr("value", location.coords.longitude);
     		$("#post_latitude").attr("value", location.coords.latitude);
     		$("#post_accuracy").attr("value", location.coords.accuracy);
     		$("#submit_but").removeAttr("disabled");
 
     		//get image
-			
-    		$("#map_img").attr("src", "http://maps.google.com/maps/api/staticmap?center="+location.coords.latitude+","+location.coords.longitude+"&zoom=15&size=290x200&maptype=roadmap&markers=color:blue|"+location.coords.latitude+","+location.coords.longitude+"&sensor=false").load(function() {
-    			$.mobile.pageLoading(true);
-				//$(this).fadeIn();
-    			//$('#ajax_loader').hide();
-    			//$("#form_holder").slideDown();
+			$.mobile.pageLoading();
+    		$("#map_img").attr("src", "http://maps.google.com/maps/api/staticmap?center="+location.coords.latitude+","+location.coords.longitude+"&zoom=15&size="+ (screen_width - 30) +"x200&maptype=roadmap&markers=color:blue|"+location.coords.latitude+","+location.coords.longitude+"&sensor=false").load(function() {
+				$.mobile.pageLoading(true);
+				$(this).removeClass('loading');
     		});
 
     		//Get messages
@@ -75,7 +79,7 @@ var guff_geo = {
     	}
     	else
     	{
-    		//still waiting
+    		
     	}
     },
     
@@ -99,6 +103,9 @@ var guff_geo = {
 	},
 	
 	init:function() {	
+		
+		screen_width = screen.width;
+		$.mobile.pageLoading();
 		
 		//Check for geo capability
 		if (!$('html').hasClass("geolocation"))
@@ -126,9 +133,12 @@ var guff_geo = {
 }
 
 $(document).ready(function(){
+	
+	guff_geo.init();
+	
 	var max_length = 149;
-
-
+		
+		
 	whenkeydown = function(max_length)
 	{
 	    $("#post_text").unbind().keyup(function()
@@ -161,5 +171,7 @@ $(document).ready(function(){
 	}
 	//run listen key press
     whenkeydown(max_length);
-	guff_geo.init
+	
 });
+
+

@@ -2,18 +2,14 @@
 	<div data-role="header">
 		<h1>Guff</h1>
 	</div>
-	<!-- <div class='loader'>
-			<img id='ajax_loader' src='/images/ajax-loader.gif' alt='loading' />
-			<p>Checking your position</p>
-		</div> -->
 	<div data-role="content">
-		<h3>Is this close enough?</h3>
+		<h3>Close enough?</h3>
 		<div id='the_map'>
-			<img id='map_img' src="" alt="map" />
+			<img id='map_img' src="/images/map-holder.png" class="loading" alt="map" />
 		</div>
 		<div data-inline="true">
-			<a href="/" data-role="button" data-inline="true" data-ajax="false" data-icon="refresh">Try Again</a>
-			<a href="#form-messages"  data-inline="true" data-transition='slideup' data-role="button" data-icon="check" data-theme="b">Ok</a>
+			<a href="/" data-role="button" data-inline="true" data-ajax="false" data-icon="refresh">Nope</a>
+			<a href="#form-messages"  data-inline="true" data-transition='slideup' data-role="button" data-icon="check" data-theme="b">Yup</a>
 		</div>
 	</div>
 </div>
