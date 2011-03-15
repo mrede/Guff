@@ -49,7 +49,6 @@ var guff_geo = {
     		$("#submit_but").removeAttr("disabled");
 
     		//get image
-			$.mobile.pageLoading();
     		$("#map_img").attr("src", "http://maps.google.com/maps/api/staticmap?center="+location.coords.latitude+","+location.coords.longitude+"&zoom=15&size="+ (screen_width - 30) +"x200&maptype=roadmap&markers=color:blue|"+location.coords.latitude+","+location.coords.longitude+"&sensor=false").load(function() {
 				$.mobile.pageLoading(true);
 				$(this).removeClass('loading');
