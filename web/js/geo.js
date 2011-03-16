@@ -13,9 +13,6 @@ function updatePos(location)
 	});
 }
 
-
-
-
 var test = 0;
 var screen_width;
 

@@ -13,7 +13,7 @@
           <?php echo $form['text']->renderError() ?>
           <?php echo $form['text'] ?><br/>
 		  <strong>100m range for 2hrs</strong> / Accuracy: <span id="accuracy"></span><br/>
-		  <input id='submit_but' data-inline="true" data-theme="b" class='button' type="submit" value="send"/>
+		  <input id='submit_but' data-inline="true" data-ajax="false" data-theme="b" class='button' type="submit" value="send"/>
 		   <?php echo $form->renderHiddenFields()?>
           
       
