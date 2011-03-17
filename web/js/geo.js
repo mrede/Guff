@@ -13,7 +13,10 @@ function updatePos(location)
 	});
 }
 
-var test = 0;
+
+
+
+var test = 1;
 var screen_width;
 
 var guff_geo = {
@@ -25,7 +28,30 @@ var guff_geo = {
 		$("#form_holder").load('/post/ajaxForm', function(data, status, response) { });
 	},
 	
+	getMessages:function() {
+	    var lat = $('body').data('lat');
+	    var lng = $('body').data('lng');
+	    
+	    $.ajax({
+		    
+		    url: "/post/messages/"+lat+"/"+lng,
+		    type: 'get',
+		    dataType: 'json',
+		    success: function(data, status) {
+		        //get msgs ul
+		        var list = $('#msgs');
+		        var append = '';
+		        
+		        $(data.posts).each(function() {
+		            append += '<li>'+this.text+'</li>';
+		        });
+		        list.append(append);
+		    },
+		})
+	},
+	
 	geoHandler:function(location) {
+	    
     	//Check acc before bothering
     	//console.log("Location", location);
     	if (location.coords.accuracy<50)
@@ -53,22 +79,9 @@ var guff_geo = {
 
     		//Get messages
     		//$("#messages").load("/post/messages/"+location.coords.latitude+"/"+location.coords.longitude);
-    		$.ajax({
-    		    url: "/post/messages/"+location.coords.latitude+"/"+location.coords.longitude,
-    		    type: 'get',
-    		    dataType: 'json',
-    		    success: function(data, status) {
-    		        //get msgs ul
-    		        var list = $('#msgs');
-    		        var append = '';
-    		        console.log(data.posts.length);
-    		        $(data.posts).each(function() {
-    		            console.log(this);
-    		            append += '<li>'+this.text+'</li>';
-    		        });
-    		        list.append(append);
-    		    },
-    		})
+    		$('body').data('lat', location.coords.latitude);
+    		$('body').data('lng', location.coords.longitude);
+    		guff_geo.getMessages();
 
     		//$("#dump").append("Lat: "+location.coords.latitude+", Lng: "+location.coords.longitude+", Acc:"+location.coords.accuracy)
     		$("#accuracy").text(location.coords.accuracy);
@@ -103,6 +116,11 @@ var guff_geo = {
 		screen_width = screen.width;
 		$.mobile.pageLoading();
 		
+		/*$('#msg-post').live('submit', function() {
+		    guff_geo.getMessages();
+		    return false;
+		});*/
+		
 		//Check for geo capability
 		if (!$('html').hasClass("geolocation"))
 		{
@@ -119,7 +137,7 @@ var guff_geo = {
 		if (test)
 		{
 			setTimeout(function(){
-				guff_geo.geoHandler({coords: {latitude: 1, longitude: 2, accuracy: 70}});
+				guff_geo.geoHandler({coords: {latitude: 51, longitude: 2, accuracy: 70}});
 			}, 3000);
 		}
 	
