@@ -12,15 +12,17 @@ var guff_geo = {
 	},
 	
 	getMessages:function() {
+		
+		
 	    var lat = $('body').data('lat');
 	    var lng = $('body').data('lng');
 	    
 	    $.ajax({
-		    
 		    url: "/post/messages/"+lat+"/"+lng,
 		    type: 'get',
 		    dataType: 'json',
 		    success: function(data, status) {
+			
 		        //get msgs ul
 		        var list = $('#msgs');
 		        $.mobile.pageLoading(true);
@@ -33,6 +35,7 @@ var guff_geo = {
 		        if ($('#msgs').listview()) {
 		            $('#msgs').listview('refresh');
 	            }
+
 		    },
 		})
 	},
