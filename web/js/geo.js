@@ -50,8 +50,11 @@ var guff_geo = {
     	}
     	if (location.coords.accuracy<100)
     	{
+			
 			//cancel page loading
             $('#loc-buttons').fadeIn();
+			$('#location-message').text('Close enough?');
+			$.mobile.pageLoading(true);
 			
     		$("#post_longitude").attr("value", location.coords.longitude);
     		$("#post_latitude").attr("value", location.coords.latitude);
@@ -60,7 +63,6 @@ var guff_geo = {
 
     		//get image
     		$("#map_img").attr("src", "http://maps.google.com/maps/api/staticmap?center="+location.coords.latitude+","+location.coords.longitude+"&zoom=15&size="+ (screen_width - 30) +"x200&maptype=roadmap&markers=color:blue|"+location.coords.latitude+","+location.coords.longitude+"&sensor=false").load(function() {
-				$.mobile.pageLoading(true);
 				$(this).removeClass('loading');
     		});
 
@@ -101,6 +103,7 @@ var guff_geo = {
 	init:function() {	
 	    
 	    $('#loc-buttons').hide();
+		$('#location-message').fadeIn();
 		
 		screen_width = screen.width;
 		$.mobile.pageLoading();
@@ -153,6 +156,14 @@ $(document).bind("mobileinit", function(){
   $.extend(  $.mobile , {
      ajaxFormsEnabled: false
    });
+  
+  //if you are on the post page without a location....
+  $('#form-messages').live('pagebeforecreate',function(event, ui){
+  	if($('body').data('lat') == undefined) {
+		document.location = "http://" + document.location.href.split('/')[2];
+	}
+  });
+
 });
 
 
@@ -160,9 +171,14 @@ $(document).ready(function(){
     
 	guff_geo.init();
 	
-	var max_length = 149;
-		
-		
+	//user would like to try again...
+	$("#refresh-location").click(function(){
+		guff_geo.init();
+		$('#location-message').text('Finding your location...');
+		return false;
+	});
+	
+	var max_length = 149;	
 	whenkeydown = function(max_length)
 	{
 	    $("#post_text").unbind().keyup(function()
