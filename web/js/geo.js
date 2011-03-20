@@ -103,6 +103,13 @@ var guff_geo = {
 		$('#geo-fail').slideDown();
 	},
 	
+	locate:function() {
+	    navigator.geolocation.watchPosition(guff_geo.geoHandler, guff_geo.errorHandler, {
+			enableHighAccuracy: true,
+			maximumAge: 0
+		});
+	},
+	
 	init:function() {	
 	    
 	    $('#loc-buttons').hide();
@@ -137,10 +144,14 @@ var guff_geo = {
 			return;
 		}
 		
-		navigator.geolocation.watchPosition(guff_geo.geoHandler, guff_geo.errorHandler, {
-			enableHighAccuracy: true,
-			maximumAge: 0
-		});
+		//user would like to try again...
+    	$("#refresh-location").click(function(){
+    		guff_geo.locate();
+    		$('#location-message').text('Finding your location...');
+    		return false;
+    	});
+		
+		guff_geo.locate();
 		
 		if (test)
 		{
@@ -172,16 +183,8 @@ $(document).bind("mobileinit", function(){
 
 
 $(document).ready(function(){
-    
 	guff_geo.init();
-	
-	//user would like to try again...
-	$("#refresh-location").click(function(){
-		guff_geo.init();
-		$('#location-message').text('Finding your location...');
-		return false;
-	});
-	
+
 	var max_length = 149;	
 	whenkeydown = function(max_length)
 	{
