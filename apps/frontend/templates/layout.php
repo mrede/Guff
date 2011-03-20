@@ -3,7 +3,9 @@
   <head>
     <?php include_http_metas() ?>
     <?php include_metas() ?>
+	<meta name="apple-mobile-web-app-capable" content="yes" />
     <?php include_title() ?>
+	<link rel="apple-touch-startup-image" href="/images/apple-touch-icon.png" />
 	<link rel="apple-touch-icon" href="/images/apple-touch-icon.png" /> 
     <?php #include_stylesheets() ?>
 	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.min.css" />
