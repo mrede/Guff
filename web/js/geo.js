@@ -114,6 +114,7 @@ var guff_geo = {
         screen_width = screen.width;
         $.mobile.pageLoading();
         
+        $('#msg-post').unbind('submit');
         $('#msg-post').submit(function(){
             if ($('#post_text').attr('value').length>0) {
                 $.mobile.pageLoading();
