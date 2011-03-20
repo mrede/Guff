@@ -25,7 +25,7 @@ var guff_geo = {
 			
 		        //get msgs ul
 		        var list = $('#msgs');
-		        
+		        $.mobile.pageLoading(true);
 		        var append = '';
 		        
 		        $(data.posts).each(function() {
@@ -113,19 +113,18 @@ var guff_geo = {
 		
 		$('#msg-post').submit(function(){
             if ($('#post_text').attr('value').length>0) {
-			$.mobile.pageLoading();
-            $.ajax({
-                url: $('#msg-post').attr('action'),
-                type: 'post',
-                data: $('#msg-post').serialize(),
-                dataType: 'json',
-                success: function() {
-                    //blank value
-                    $('#post_text').attr('value','');
-                    guff_geo.getMessages();
-					$.mobile.pageLoading(true);
-                }
-            });
+                $.mobile.pageLoading();
+                $.ajax({
+                    url: $('#msg-post').attr('action'),
+                    type: 'post',
+                    data: $('#msg-post').serialize(),
+                    dataType: 'json',
+                    success: function() {
+                        //blank value
+                        $('#post_text').attr('value','');
+                        guff_geo.getMessages();
+                    }
+                });
             }
             return false;
         });
