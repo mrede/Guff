@@ -12,15 +12,17 @@ var guff_geo = {
 	},
 	
 	getMessages:function() {
+		
+		
 	    var lat = $('body').data('lat');
 	    var lng = $('body').data('lng');
 	    
 	    $.ajax({
-		    
 		    url: "/post/messages/"+lat+"/"+lng,
 		    type: 'get',
 		    dataType: 'json',
 		    success: function(data, status) {
+			
 		        //get msgs ul
 		        var list = $('#msgs');
 		        
@@ -33,6 +35,7 @@ var guff_geo = {
 		        if ($('#msgs').listview()) {
 		            $('#msgs').listview('refresh');
 	            }
+
 		    },
 		})
 	},
@@ -110,6 +113,7 @@ var guff_geo = {
 		
 		$('#msg-post').submit(function(){
             if ($('#post_text').attr('value').length>0) {
+			$.mobile.pageLoading();
             $.ajax({
                 url: $('#msg-post').attr('action'),
                 type: 'post',
@@ -119,6 +123,7 @@ var guff_geo = {
                     //blank value
                     $('#post_text').attr('value','');
                     guff_geo.getMessages();
+					$.mobile.pageLoading(true);
                 }
             });
             }
