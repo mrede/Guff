@@ -7,7 +7,7 @@
 		<div id='the_map'>
 			<img id='map_img' src="/images/map-holder.png" class="loading" alt="map" />
 		</div>
-		<div data-inline="true">
+		<div id='loc-buttons' data-inline="true">
 			<a href="/" data-role="button" data-inline="true" data-ajax="false" data-icon="refresh">Nope</a>
 			<a href="#form-messages"  data-inline="true" data-transition='slideup' data-role="button" data-icon="check" data-theme="b">Yup</a>
 		</div>

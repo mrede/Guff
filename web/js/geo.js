@@ -1,22 +1,5 @@
 var watchId;
-
-
-
-function updatePos(location)
-{
-	//$('#form_holder').slideDown();
-	guff_geo.loadMap();
-	//console.log("Position located", "Lat: "+location.coords.latitude+", Lng: "+location.coords.longitude+", Acc:"+location.coords.accuracy);
-	//$("#debug").append("Lat: "+location.coords.latitude+", Lng: "+location.coords.longitude+", Acc:"+location.coords.accuracy)
-	$('#map_img').attr('src', 'image.jpg').load(function() {
-		alert('Image Loaded');
-	});
-}
-
-
-
-
-var test = 1;
+var test = 0;
 var screen_width;
 
 var guff_geo = {
@@ -40,12 +23,16 @@ var guff_geo = {
 		    success: function(data, status) {
 		        //get msgs ul
 		        var list = $('#msgs');
+		        
 		        var append = '';
 		        
 		        $(data.posts).each(function() {
 		            append += '<li>'+this.text+'</li>';
 		        });
-		        list.append(append);
+		        list.html(append);
+		        if ($('#msgs').listview()) {
+		            $('#msgs').listview('refresh');
+	            }
 		    },
 		})
 	},
@@ -64,7 +51,7 @@ var guff_geo = {
     	if (location.coords.accuracy<100)
     	{
 			//cancel page loading
-
+            $('#loc-buttons').fadeIn();
 			
     		$("#post_longitude").attr("value", location.coords.longitude);
     		$("#post_latitude").attr("value", location.coords.latitude);
@@ -96,7 +83,7 @@ var guff_geo = {
     	//try again
     	if (err.code>0) {
     	    if (err.code==1) {
-    	        $("#geo-fail").append("DENIED");
+    	        $("#geo-fail").append("Denied");
 	        } else if (err.code==2) {
         	    $("#geo-fail").append("Position Unavailable");
     	    } else if (err.code==3) {
@@ -112,14 +99,28 @@ var guff_geo = {
 	},
 	
 	init:function() {	
+	    
+	    $('#loc-buttons').hide();
 		
 		screen_width = screen.width;
 		$.mobile.pageLoading();
 		
-		/*$('#msg-post').live('submit', function() {
-		    guff_geo.getMessages();
-		    return false;
-		});*/
+		$('#msg-post').submit(function(){
+            if ($('#post_text').attr('value').length>0) {
+            $.ajax({
+                url: $('#msg-post').attr('action'),
+                type: 'post',
+                data: $('#msg-post').serialize(),
+                dataType: 'json',
+                success: function() {
+                    //blank value
+                    $('#post_text').attr('value','');
+                    guff_geo.getMessages();
+                }
+            });
+            }
+            return false;
+        });
 		
 		//Check for geo capability
 		if (!$('html').hasClass("geolocation"))
@@ -146,8 +147,17 @@ var guff_geo = {
 	
 }
 
+
+$(document).bind("mobileinit", function(){
+  //apply overrides here
+  $.extend(  $.mobile , {
+     ajaxFormsEnabled: false
+   });
+});
+
+
 $(document).ready(function(){
-	
+    
 	guff_geo.init();
 	
 	var max_length = 149;
@@ -187,5 +197,6 @@ $(document).ready(function(){
     whenkeydown(max_length);
 	
 });
+
 
 

@@ -31,7 +31,9 @@ class postActions extends sfActions
 
     $this->processForm($request, $this->form);
     $this->setLayout(false);
-    $this->setTemplate('new');
+    //$this->setTemplate('messages');
+    //$this->executeMessages($request);
+    //$this->forward('post','messages');
     
   }
 
@@ -39,6 +41,14 @@ class postActions extends sfActions
 	{
 		$lat = $request->getParameter("lat").".".$request->getParameter("lat2");
 		$lng = $request->getParameter("lng").".".$request->getParameter("lng2");
+		$this->logMessage("MEssages $lat, $lng");
+		//try post
+		if (strlen($lat)==1) {
+		    
+		    $lat = '51.57';//$request->getParameter("post[latitude]");
+    		$lng = '-0.106';//$request->getParameter("post[longitude]");
+    		$this->logMessage("ALT LAT LNG = $lat, $lng");
+		}
 		$posts = Doctrine::getTable('Post')->getNearby($lat, $lng);
 		$this->setLayout(false);
 		
@@ -50,6 +60,7 @@ class postActions extends sfActions
 		//drop last
 		$this->json  = substr($this->json, 0, -1);
 		$this->json .=']} ';
+		$this->getResponse()->setHttpHeader('Content-type','application/json');
 	}
 
 	public function executeLoadMap(	sfWebRequest $request)
@@ -62,11 +73,11 @@ class postActions extends sfActions
     $form->bind($request->getParameter($form->getName()), $request->getFiles($form->getName()));
     if ($form->isValid())
     {
-      $post = $form->save();
+      $this->post = $form->save();
 
       if (!$request->isXmlHttpRequest())
       {
-          $this->redirect('post/new?id='.$post->getId());
+          $this->redirect('post/new?id='.$this->post->getId());
       }
     }
   }
