@@ -56,7 +56,7 @@ class postActions extends sfActions
 		$this->json = '{"posts": [';
 		foreach ($posts as $p)
 		{
-		    $this->json .= json_encode($p).',';
+		    $this->json .= json_encode($p->toPublicArray()).',';
 		}
 		//drop last
 		$this->json  = substr($this->json, 0, -1);

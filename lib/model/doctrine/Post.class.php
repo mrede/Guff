@@ -12,4 +12,14 @@
  */
 class Post extends BasePost
 {
+    public function toPublicArray()
+	{
+	    $arr = array();
+	    $arr['t'] = $this->getText();
+	    $now = intval(Date('U', time()));
+	    $exp = intval(Date('U', strtotime('+2 hour', strtotime($this->getCreatedAt()))));
+	    $arr['e'] = ($exp-$now);
+	    return $arr;
+	}
+	
 }

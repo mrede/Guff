@@ -17,16 +17,17 @@ class PostTable extends Doctrine_Table
 		$q = $this->createQuery()
 					->from('Post a')
 	        ->addSelect("((acos( cos( radians($lat) ) * cos( radians( a.latitude ) ) * cos( radians( a.longitude ) - radians($lng) ) + sin( radians($lat) ) * sin( radians( a.latitude ) ) )) * 6371) as distance, a.* ")
-	        ->addWhere('created_at > "'.date('Y-m-d H:i', strtotime('-2 hours')).'"')
+	        ->addWhere('created_at > "'.date('Y-m-d H:i:s', strtotime('-2 hours')).'"')
 	        ->addHaving("distance < ".$defaultRadius)
 	        ->orderBy('a.created_at desc');
 
 
 
-		return $q->fetchArray();
+		return $q->execute();
 		
 	}
 	
+
 	public function getRecent()
 	{
 		$q = $this->createQuery()
