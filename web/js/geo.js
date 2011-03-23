@@ -29,7 +29,7 @@ var guff_geo = {
                 var append = '';
                 
                 $(data.posts).each(function() {
-                    append += '<li>'+this.text+'</li>';
+                    append += '<li>'+this.t+'</li>';
                 });
                 list.html(append);
                 if ($('#msgs').listview()) {
