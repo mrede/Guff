@@ -24,7 +24,7 @@
 		<h3>About</h3>
 		<p>It's not big and its not clever. Guff is just some experimental fun.</p> 
 		<p>The unnecessary obstacles often make for interesting results.</p>
-		<p>Post a 149 character message anonymously and people will be able to view it for 2 hours, 100m from your location.</p>
+		<p>Post a 149 character message, anonymously. People will be able to view it for 2 hours, 100m from your location.</p>
 		<p>That's it, go gossip in bars and clubs, start a flash mob with strangers or.....</p> 
 		<a href="mailto:howdy@thisislabel.co.uk">Show us some love</a> 
 	</div>
