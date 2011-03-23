@@ -100,7 +100,7 @@ var guff_geo = {
     },
     
     locate:function() {
-        navigator.geolocation.watchPosition(guff_geo.geoHandler, guff_geo.errorHandler, {
+        watchId = navigator.geolocation.watchPosition(guff_geo.geoHandler, guff_geo.errorHandler, {
             enableHighAccuracy: true,
             maximumAge: 0
         });
@@ -142,8 +142,16 @@ var guff_geo = {
         
         //user would like to try again...
         $("#refresh-location").click(function(){
+			navigator.geolocation.clearWatch(watchId);
+			$.mobile.pageLoading();
             guff_geo.locate();
             $('#location-message').text('Finding your location...');
+            return false;
+        });
+
+		$("#got-location").click(function(){
+			navigator.geolocation.clearWatch(watchId);
+			$.mobile.changePage($("#form-messages"), "slideup", true, true);
             return false;
         });
         
