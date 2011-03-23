@@ -48,9 +48,9 @@ abstract class BasePost extends sfDoctrineRecord
              'autoincrement' => false,
              'length' => 16,
              ));
-        $this->hasColumn('text', 'string', 255, array(
+        $this->hasColumn('text', 'string', 148, array(
              'type' => 'string',
-             'length' => 255,
+             'length' => 148,
              ));
         $this->hasColumn('accuracy', 'int', null, array(
              'type' => 'int',

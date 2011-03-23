@@ -17,6 +17,6 @@ Post:
       primary: false
       notnull: true
       autoincrement: false
-    text: string(255)
+    text: string(148)
     accuracy: int
     
