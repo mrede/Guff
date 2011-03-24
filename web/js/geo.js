@@ -40,15 +40,22 @@ var guff_geo = {
     },
 
     leftToGo:function(seconds) {
-		minutes = seconds / 60;
+		minutes = Math.round(seconds / 60);
 		hours = minutes / 60;
 		//maybe 2 hours to go, 1 hour to go, 30 minutes, 2 minutes, count down?
 		if(hours > 1) {
-			time_message = 'under 2 hours to go';
+		    if (minutes > 115) {
+		        var mOld = 121-minutes;
+		        var mS = mOld > 1 ? 's':'';
+		        time_message = "posted less than "+mOld+" minute"+mS+" ago";
+		    } else {
+		        time_message = 'under 2 hours left ';
+		    }
+			
 		} else if (hours <= 1 && minutes > 30) {
-			time_message = 'under 1 hour to go';
+			time_message = 'under 1 hour left';
 		} else if (minutes <= 30 && minutes > 2) {60
-			time_message = 'under 30 minutes to go';
+			time_message = 'under 30 minutes left';
 		} else {
 			time_message = 'nearly outta here';
 		}
