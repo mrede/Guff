@@ -1,2 +1,4 @@
 #the_map { height: 200px; text-align: center; }
 #the_map img.loading { margin-top: 50px; }
+ul li p { padding-top: 5px; color: #2489CE; }
+ul li span { font-weight: normal; font-style: italic; }

@@ -8,7 +8,7 @@
   
   <?php echo $form->renderGlobalErrors() ?>
 
-  <?php echo $form['text']->renderLabel('Post a message [<span id="counter">149</span> characters]') ?><br/>
+  <?php echo $form['text']->renderLabel('Post a message [<span id="counter">148</span> characters]') ?><br/>
   
           <?php echo $form['text']->renderError() ?>
           <?php echo $form['text'] ?><br/>

@@ -27,9 +27,9 @@ var guff_geo = {
                 var list = $('#msgs');
                 $.mobile.pageLoading(true);
                 var append = '';
-                
                 $(data.posts).each(function() {
-                    append += '<li>'+this.t+'</li>';
+					left_to_go = guff_geo.leftToGo(this.e);
+                    append += '<li><p style="font-size: 1em;">'+this.t+'</p><span>'+left_to_go+'</span></li>';
                 });
                 list.html(append);
                 if ($('#msgs').listview()) {
@@ -38,6 +38,22 @@ var guff_geo = {
             }
         });
     },
+
+    leftToGo:function(seconds) {
+		minutes = seconds / 60;
+		hours = minutes / 60;
+		//maybe 2 hours to go, 1 hour to go, 30 minutes, 2 minutes, count down?
+		if(hours > 1) {
+			time_message = 'under 2 hours to go';
+		} else if (hours <= 1 && minutes > 30) {
+			time_message = 'under 1 hour to go';
+		} else if (minutes <= 30 && minutes > 2) {60
+			time_message = 'under 30 minutes to go';
+		} else {
+			time_message = 'nearly outta here';
+		}
+		return time_message;
+	},
     
     geoHandler:function(location) {
         
@@ -190,7 +206,7 @@ $(document).bind("mobileinit", function(){
 $(document).ready(function(){
     guff_geo.init();
 
-    var max_length = 149;    
+    var max_length = 148;    
     whenkeydown = function(max_length)
     {
         $("#post_text").unbind().keyup(function()
