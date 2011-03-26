@@ -31,8 +31,8 @@ class postActions extends sfActions
 
     $this->processForm($request, $this->form);
     $this->setLayout(false);
-    //$this->setTemplate('messages');
-    //$this->executeMessages($request);
+    $this->setTemplate('messages');
+    $this->executeMessages($request);
     //$this->forward('post','messages');
     
   }
@@ -43,12 +43,12 @@ class postActions extends sfActions
 		$lng = $request->getParameter("lng").".".$request->getParameter("lng2");
 		$this->logMessage("MEssages $lat, $lng");
 		//try post
-	/*	if (strlen($lat)==1) {
+		if (strlen($lat)==1) {
 		    
-		    $lat = '51.57';//$request->getParameter("post[latitude]");
-    		$lng = '-0.106';//$request->getParameter("post[longitude]");
+		    $lat = $this->post->getLatitude();//'51.57';//$request->getParameter("post[latitude]");
+    		$lng = $this->post->getLongitude();//'-0.106';//$request->getParameter("post[longitude]");
     		$this->logMessage("ALT LAT LNG = $lat, $lng");
-		}*/
+		}
 		
 		$posts = Doctrine::getTable('Post')->getNearby($lat, $lng);
 		$this->setLayout(false);

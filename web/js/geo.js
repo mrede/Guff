@@ -11,9 +11,23 @@ var guff_geo = {
         $("#form_holder").load('/post/ajaxForm', function(data, status, response) { });
     },
     
+    parseMessages:function(data, status) {
+        //get msgs ul
+        var list = $('#msgs');
+        $.mobile.pageLoading(true);
+        var append = '';
+        $(data.posts).each(function() {
+			left_to_go = guff_geo.leftToGo(this.e);
+            append += '<li><p style="font-size: 1em;">'+this.t+'</p><span>'+left_to_go+'</span></li>';
+        });
+        list.html(append);
+        if ($('#msgs').listview()) {
+            $('#msgs').listview('refresh');
+			$('textarea').val('');
+        }
+    },
+    
     getMessages:function() {
-        
-        alert('getMessages called');
         var lat = $('body').data('lat');
         var lng = $('body').data('lng');
         
@@ -21,34 +35,27 @@ var guff_geo = {
             url: "/post/messages/"+lat+"/"+lng,
             type: 'get',
             dataType: 'json',
-            success: function(data, status) {
-            	
-                //get msgs ul
-                var list = $('#msgs');
-                $.mobile.pageLoading(true);
-                var append = '';
-                $(data.posts).each(function() {
-					left_to_go = guff_geo.leftToGo(this.e);
-                    append += '<li><p style="font-size: 1em;">'+this.t+'</p><span>'+left_to_go+'</span></li>';
-                });
-                list.html(append);
-                if ($('#msgs').listview()) {
-                    $('#msgs').listview('refresh');
-                }
-            }
+            success: guff_geo.parseMessages
         });
     },
 
     leftToGo:function(seconds) {
-		minutes = seconds / 60;
+		minutes = Math.round(seconds / 60);
 		hours = minutes / 60;
 		//maybe 2 hours to go, 1 hour to go, 30 minutes, 2 minutes, count down?
 		if(hours > 1) {
-			time_message = 'under 2 hours to go';
+		    if (minutes > 115) {
+		        var mOld = 121-minutes;
+		        var mS = mOld > 1 ? 's':'';
+		        time_message = "posted less than "+mOld+" minute"+mS+" ago";
+		    } else {
+		        time_message = 'under 2 hours left ';
+		    }
+			
 		} else if (hours <= 1 && minutes > 30) {
-			time_message = 'under 1 hour to go';
+			time_message = 'under 1 hour left';
 		} else if (minutes <= 30 && minutes > 2) {60
-			time_message = 'under 30 minutes to go';
+			time_message = 'under 30 minutes left';
 		} else {
 			time_message = 'nearly outta here';
 		}
@@ -71,7 +78,6 @@ var guff_geo = {
             
             //cancel page loading
             $('#loc-buttons').fadeIn();
-            $('#location-message').text('Close enough?');
             $.mobile.pageLoading(true);
             
             $("#post_longitude").attr("value", location.coords.longitude);
@@ -82,6 +88,7 @@ var guff_geo = {
             //get image
             $("#map_img").attr("src", "http://maps.google.com/maps/api/staticmap?center="+location.coords.latitude+","+location.coords.longitude+"&zoom=15&size="+ (screen_width - 30) +"x200&maptype=roadmap&markers=color:blue|"+location.coords.latitude+","+location.coords.longitude+"&sensor=true").load(function() {
                 $(this).removeClass('loading');
+				$('#location-message').text('Close enough?');
             });
 
             //Get messages
@@ -139,11 +146,7 @@ var guff_geo = {
                     type: 'post',
                     data: $('#msg-post').serialize(),
                     dataType: 'json',
-                    success: function() {
-                        //blank value
-                        $('#post_text').attr('value','');
-                        guff_geo.getMessages();
-                    }
+                    success: guff_geo.parseMessages
                 });
             }
             return false;

@@ -45,7 +45,7 @@
 		<div id='form_holder'>
 			<?php include_partial("form", array('form' => $form))?>
 		</div>
-		<h2>Messages</h2>
+		<h2>Messages near you</h2>
 		<ul data-role="listview" role="listbox" data-inset="true" id="msgs" data-theme='d'>
 		
 		</ul>

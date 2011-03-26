@@ -12,7 +12,7 @@
   
           <?php echo $form['text']->renderError() ?>
           <?php echo $form['text'] ?><br/>
-		  <strong>100m range for 2hrs</strong> <!-- / Accuracy: <span id="accuracy"> --></span><br/>
+		  <strong>Your message will be visible within a 100m range of here for 2hrs</strong> <!-- / Accuracy: <span id="accuracy"> --></span><br/>
 		  <input id='submit_but' data-inline="true" data-ajax="false" data-theme="b" class='button' type="submit" value="send"/>
 		   <?php echo $form->renderHiddenFields()?>
           
