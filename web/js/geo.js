@@ -13,7 +13,7 @@ var guff_geo = {
     
     getMessages:function() {
         
-        
+        alert('getMessages called');
         var lat = $('body').data('lat');
         var lng = $('body').data('lng');
         
@@ -22,7 +22,7 @@ var guff_geo = {
             type: 'get',
             dataType: 'json',
             success: function(data, status) {
-            
+            	
                 //get msgs ul
                 var list = $('#msgs');
                 $.mobile.pageLoading(true);
