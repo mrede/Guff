@@ -11,6 +11,21 @@ var guff_geo = {
         $("#form_holder").load('/post/ajaxForm', function(data, status, response) { });
     },
     
+    parseMessages:function(data, status) {
+        //get msgs ul
+        var list = $('#msgs');
+        $.mobile.pageLoading(true);
+        var append = '';
+        $(data.posts).each(function() {
+			left_to_go = guff_geo.leftToGo(this.e);
+            append += '<li><p style="font-size: 1em;">'+this.t+'</p><span>'+left_to_go+'</span></li>';
+        });
+        list.html(append);
+        if ($('#msgs').listview()) {
+            $('#msgs').listview('refresh');
+        }
+    },
+    
     getMessages:function() {
         
         
@@ -21,21 +36,7 @@ var guff_geo = {
             url: "/post/messages/"+lat+"/"+lng,
             type: 'get',
             dataType: 'json',
-            success: function(data, status) {
-            
-                //get msgs ul
-                var list = $('#msgs');
-                $.mobile.pageLoading(true);
-                var append = '';
-                $(data.posts).each(function() {
-					left_to_go = guff_geo.leftToGo(this.e);
-                    append += '<li><p style="font-size: 1em;">'+this.t+'</p><span>'+left_to_go+'</span></li>';
-                });
-                list.html(append);
-                if ($('#msgs').listview()) {
-                    $('#msgs').listview('refresh');
-                }
-            }
+            success: guff_geo.parseMessages
         });
     },
 
@@ -146,11 +147,7 @@ var guff_geo = {
                     type: 'post',
                     data: $('#msg-post').serialize(),
                     dataType: 'json',
-                    success: function() {
-                        //blank value
-                        $('#post_text').attr('value','');
-                        guff_geo.getMessages();
-                    }
+                    success: guff_geo.parseMessages
                 });
             }
             return false;
