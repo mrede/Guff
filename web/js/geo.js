@@ -63,7 +63,6 @@ var guff_geo = {
 	},
     
     geoHandler:function(location) {
-        
         //Check acc before bothering
         //console.log("Location", location);
         if (location.coords.accuracy<50)
