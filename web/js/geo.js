@@ -65,19 +65,17 @@ var guff_geo = {
     geoHandler:function(location) {
         //Check acc before bothering
         //console.log("Location", location);
-        if (location.coords.accuracy<50)
-        {
+        
             //cancel watch
             navigator.geolocation.clearWatch(watchId);
             //cancel page loading
             $.mobile.pageLoading(true);
-        }
-        if (location.coords.accuracy<100)
-        {
+    
+
             
             //cancel page loading
             $('#loc-buttons').fadeIn();
-            $.mobile.pageLoading(true);
+            
             
             $("#post_longitude").attr("value", location.coords.longitude);
             $("#post_latitude").attr("value", location.coords.latitude);
@@ -98,7 +96,7 @@ var guff_geo = {
 
             //$("#dump").append("Lat: "+location.coords.latitude+", Lng: "+location.coords.longitude+", Acc:"+location.coords.accuracy)
             $("#accuracy").text(location.coords.accuracy);
-        }
+        
         
     },
     
