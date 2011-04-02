@@ -128,6 +128,13 @@ var guff_geo = {
     
     init:function() {    
         
+        //Set up PUSH
+        var pusher = new Pusher('6b5e2c3e82788a7a4422');
+        var channel = pusher.subscribe('guffs');
+        channel.bind('new_guff', function(data) {
+          guff_geo.getMessages();
+        });
+        
         $('#loc-buttons').hide();
         $('#location-message').fadeIn();
         
