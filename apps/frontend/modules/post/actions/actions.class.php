@@ -76,9 +76,10 @@ class postActions extends sfActions
     {
       $this->post = $form->save();
       
+      $this->logMessage("About to push");
       $pusher = new Pusher('6b5e2c3e82788a7a4422', '83a0dd059dcc0e4e6ef9', '4844');
       $pusher->trigger('guffs', 'new_guff', '1');
-      
+      $this->logMessage("PUSHED");
 
       if (!$request->isXmlHttpRequest())
       {
