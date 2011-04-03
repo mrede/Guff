@@ -94,7 +94,7 @@ class postActions extends sfActions
         $lat = str_replace('-', 'm', round($this->post->getLatitude()*1000));
         $lng = str_replace('-', 'm', round($this->post->getLongitude()*1000));
         $this->logMessage("Pushing to channel $lat _ $lng");
-        $pusher->trigger('guffs', 'c'.$lat.'_'.$lng, $this->post->getText(), $request->getParameter('sockID'));
+        $pusher->trigger('c'.$lat.'_'.$lng, 'new_guff', $this->post->getText(), $request->getParameter('sockID'));
         $this->logMessage("PUSHED");
 
       if (!$request->isXmlHttpRequest())
