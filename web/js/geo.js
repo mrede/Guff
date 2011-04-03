@@ -189,7 +189,21 @@ var guff_geo = {
 //			alert(channelName);
 			channel.bind("new_guff", function(data) {
 
-                guff_geo.getMessages();
+                //guff_geo.getMessages();
+                var list = $('#msgs');
+
+                var append = '';
+                
+        			left_to_go = guff_geo.leftToGo(1);
+                    append += '<li><p style="font-size: 1em;">'+data+'</p><span>'+left_to_go+'</span></li>';
+                
+                list.prepend(append);
+                if ($('#msgs').listview()) {
+                    $('#msgs').listview('refresh');
+        			$('textarea').val('');
+                }
+
+                
             });
             
             return false;
