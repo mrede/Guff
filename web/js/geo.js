@@ -2,7 +2,7 @@ var watchId;
 var test = 0;
 var screen_width;
 
-var pusher = null;
+
 
 var guff_geo = {
     
@@ -128,9 +128,17 @@ var guff_geo = {
         });
     },
     
+    
+    
     init:function() {    
         
         
+        Pusher.log = function(message) {
+            if (window.console && window.console.log) window.console.log(message);
+        };
+        
+        // Flash fallback logging - don't include this in production
+        WEB_SOCKET_DEBUG = true;
         
         
         $('#loc-buttons').hide();
@@ -180,11 +188,12 @@ var guff_geo = {
 			//Set up PUSH
             
             
-            pusher = new Pusher('6b5e2c3e82788a7a4422');
+            
             
             var lat = String(Math.round($('body').data('lat')*1000)).replace("-", "m");
             var lng = String(Math.round($('body').data('lng')*1000)).replace("-", "m");
 			var channelName = 'c'+lat+'_'+lng;
+
 			var channel = pusher.subscribe(channelName);
 //			alert(channelName);
 			channel.bind("new_guff", function(data) {
@@ -194,7 +203,7 @@ var guff_geo = {
 
                 var append = '';
                 
-        			left_to_go = guff_geo.leftToGo(1);
+        			left_to_go = guff_geo.leftToGo(7200);
                     append += '<li><p style="font-size: 1em;">'+data+'</p><span>'+left_to_go+'</span></li>';
                 
                 list.prepend(append);

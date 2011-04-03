@@ -12,7 +12,8 @@
 	<link rel="stylesheet" href="/css/add2home.css">
 	<script src="http://code.jquery.com/jquery-1.5.min.js" type="text/javascript"></script>
 	<script src="/js/modernizr-1.6.min.js" type="text/javascript"></script>
-	<script src="http://js.pusherapp.com/1.8/pusher.min.js" type="text/javascript"></script>
+	<script src="http://js.pusherapp.com/1.8.2/pusher.min.js" type="text/javascript"></script>
+
 	<script type="text/javascript">
 	<?php if ($_SERVER['ENVIRONMENT']=='DEV'):?>
         // Enable pusher logging - don't include this in production
@@ -22,7 +23,7 @@
         
         // Flash fallback logging - don't include this in production
         WEB_SOCKET_DEBUG = true;
-        
+        var pusher = new Pusher('6b5e2c3e82788a7a4422');
     <?php endif?>
 
       </script>
