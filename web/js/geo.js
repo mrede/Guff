@@ -2,6 +2,8 @@ var watchId;
 var test = 0;
 var screen_width;
 
+var pusher = null;
+
 var guff_geo = {
     
     /**
@@ -128,12 +130,8 @@ var guff_geo = {
     
     init:function() {    
         
-        //Set up PUSH
-        var pusher = new Pusher('6b5e2c3e82788a7a4422');
-        var channel = pusher.subscribe('guffs');
-        channel.bind('new_guff', function(data) {
-          guff_geo.getMessages();
-        });
+        
+        
         
         $('#loc-buttons').hide();
         $('#location-message').fadeIn();
@@ -148,7 +146,7 @@ var guff_geo = {
                 $.ajax({
                     url: $('#msg-post').attr('action'),
                     type: 'post',
-                    data: $('#msg-post').serialize(),
+                    data: $('#msg-post').serialize()+'&sockID='+pusher.socket_id,
                     dataType: 'json',
                     success: guff_geo.parseMessages
                 });
@@ -176,6 +174,26 @@ var guff_geo = {
 		$("#got-location").click(function(){
 			navigator.geolocation.clearWatch(watchId);
 			$.mobile.changePage($("#form-messages"), "slideup", true, true);
+			//Get Messages
+			
+			//Register push
+			//Set up PUSH
+            
+            
+            pusher = new Pusher('6b5e2c3e82788a7a4422');
+            
+            var lat = String(Math.round($('body').data('lat')*1000)).replace("-", "m");
+            var lng = String(Math.round($('body').data('lng')*1000)).replace("-", "m");
+			var channelName = 'c'+lat+'_'+lng;
+			var channel = pusher.subscribe(channelName);
+//			alert(channelName);
+			channel.bind("new_guff", function(data) {
+
+                var dat = eval(data);
+
+                guff_geo.getMessages();
+            });
+            
             return false;
         });
         
