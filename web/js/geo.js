@@ -189,8 +189,6 @@ var guff_geo = {
 //			alert(channelName);
 			channel.bind("new_guff", function(data) {
 
-                var dat = eval(data);
-
                 guff_geo.getMessages();
             });
             
