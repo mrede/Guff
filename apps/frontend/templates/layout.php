@@ -23,9 +23,9 @@
         
         // Flash fallback logging - don't include this in production
         WEB_SOCKET_DEBUG = true;
-        var pusher = new Pusher('6b5e2c3e82788a7a4422');
+        
     <?php endif?>
-
+        var pusher = new Pusher('6b5e2c3e82788a7a4422');
       </script>
 	<script src="/js/geo.js" type="text/javascript"></script>
 	
