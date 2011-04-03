@@ -83,7 +83,9 @@ class postActions extends sfActions
     if ($form->isValid())
     {
       $this->post = $form->save();
-      
+      $this->post->setText(strip_tags($this->post->getText()));
+      $this->post->save();
+      $this->logMessage("TEXT:".$this->post->getText());
       $this->logMessage("About to push");
       $pusher = new Pusher('6b5e2c3e82788a7a4422', '83a0dd059dcc0e4e6ef9', '4844');
       
