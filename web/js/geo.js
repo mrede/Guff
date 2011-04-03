@@ -201,7 +201,6 @@ var guff_geo = {
                 list.prepend(append);
                 if ($('#msgs').listview()) {
                     $('#msgs').listview('refresh');
-                    $('textarea').val('');
                 }
                 
             });
