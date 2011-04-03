@@ -19,13 +19,13 @@ var guff_geo = {
         $.mobile.pageLoading(true);
         var append = '';
         $(data.posts).each(function() {
-            left_to_go = guff_geo.leftToGo(this.e);
+			left_to_go = guff_geo.leftToGo(this.e);
             append += '<li><p style="font-size: 1em;">'+this.t+'</p><span>'+left_to_go+'</span></li>';
         });
         list.html(append);
         if ($('#msgs').listview()) {
             $('#msgs').listview('refresh');
-            $('textarea').val('');
+			$('textarea').val('');
         }
     },
     
@@ -42,27 +42,27 @@ var guff_geo = {
     },
 
     leftToGo:function(seconds) {
-        minutes = Math.round(seconds / 60);
-        hours = minutes / 60;
-        //maybe 2 hours to go, 1 hour to go, 30 minutes, 2 minutes, count down?
-        if(hours > 1) {
-            if (minutes > 115) {
-                var mOld = 121-minutes;
-                var mS = mOld > 1 ? 's':'';
-                time_message = "posted less than "+mOld+" minute"+mS+" ago";
-            } else {
-                time_message = 'under 2 hours left ';
-            }
-            
-        } else if (hours <= 1 && minutes > 30) {
-            time_message = 'under 1 hour left';
-        } else if (minutes <= 30 && minutes > 2) {
-            time_message = 'under 30 minutes left';
-        } else {
-            time_message = 'nearly outta here';
-        }
-        return time_message;
-    },
+		minutes = Math.round(seconds / 60);
+		hours = minutes / 60;
+		//maybe 2 hours to go, 1 hour to go, 30 minutes, 2 minutes, count down?
+		if(hours > 1) {
+		    if (minutes > 115) {
+		        var mOld = 121-minutes;
+		        var mS = mOld > 1 ? 's':'';
+		        time_message = "posted less than "+mOld+" minute"+mS+" ago";
+		    } else {
+		        time_message = 'under 2 hours left ';
+		    }
+			
+		} else if (hours <= 1 && minutes > 30) {
+			time_message = 'under 1 hour left';
+		} else if (minutes <= 30 && minutes > 2) {60
+			time_message = 'under 30 minutes left';
+		} else {
+			time_message = 'nearly outta here';
+		}
+		return time_message;
+	},
     
     geoHandler:function(location) {
         //Check acc before bothering
@@ -87,7 +87,7 @@ var guff_geo = {
             //get image
             $("#map_img").attr("src", "http://maps.google.com/maps/api/staticmap?center="+location.coords.latitude+","+location.coords.longitude+"&zoom=15&size="+ (screen_width - 30) +"x200&maptype=roadmap&markers=color:blue|"+location.coords.latitude+","+location.coords.longitude+"&sensor=true").load(function() {
                 $(this).removeClass('loading');
-                $('#location-message').text('Close enough?');
+				$('#location-message').text('Close enough?');
             });
 
             //Get messages
@@ -133,6 +133,14 @@ var guff_geo = {
     init:function() {    
         
         
+        Pusher.log = function(message) {
+            if (window.console && window.console.log) window.console.log(message);
+        };
+        
+        // Flash fallback logging - don't include this in production
+        WEB_SOCKET_DEBUG = true;
+        
+        
         $('#loc-buttons').hide();
         $('#location-message').fadeIn();
         
@@ -164,45 +172,47 @@ var guff_geo = {
         
         //user would like to try again...
         $("#refresh-location").click(function(){
-            navigator.geolocation.clearWatch(watchId);
-            $.mobile.pageLoading();
+			navigator.geolocation.clearWatch(watchId);
+			$.mobile.pageLoading();
             guff_geo.locate();
             $('#location-message').text('Finding your location...');
             return false;
         });
 
-        $("#got-location").click(function(){
-            navigator.geolocation.clearWatch(watchId);
-            $.mobile.changePage($("#form-messages"), "slideup", true, true);
-            //Get Messages
-            
-            //Register push
-            //Set up PUSH
+		$("#got-location").click(function(){
+			navigator.geolocation.clearWatch(watchId);
+			$.mobile.changePage($("#form-messages"), "slideup", true, true);
+			//Get Messages
+			
+			//Register push
+			//Set up PUSH
             
             
             
             
             var lat = String(Math.round($('body').data('lat')*1000)).replace("-", "m");
             var lng = String(Math.round($('body').data('lng')*1000)).replace("-", "m");
-            var channelName = 'c'+lat+'_'+lng;
+			var channelName = 'c'+lat+'_'+lng;
 
-            var channel = pusher.subscribe(channelName);
-//            alert(channelName);
-            channel.bind("new_guff", function(data) {
+			var channel = pusher.subscribe(channelName);
+//			alert(channelName);
+			channel.bind("new_guff", function(data) {
 
                 //guff_geo.getMessages();
                 var list = $('#msgs');
 
                 var append = '';
                 
-                    left_to_go = guff_geo.leftToGo(7200);
+        			left_to_go = guff_geo.leftToGo(7200);
                     append += '<li><p style="font-size: 1em;">'+data+'</p><span>'+left_to_go+'</span></li>';
                 
                 list.prepend(append);
                 if ($('#msgs').listview()) {
                     $('#msgs').listview('refresh');
-                    $('textarea').val('');
+        			$('textarea').val('');
                 }
+                
+
                 
             });
             
