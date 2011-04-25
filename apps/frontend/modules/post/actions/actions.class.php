@@ -61,8 +61,10 @@ class postActions extends sfActions
 		{
 		    $this->json .= json_encode($p->toPublicArray()).',';
 		}
-		//drop last
-		$this->json  = substr($this->json, 0, -1);
+		if (count($posts)>0) {
+		    //drop last
+		    $this->json  = substr($this->json, 0, -1);
+	    }
 		if ($postExecute) {
 		    $this->logMessage("We have a post ID, send this too");
 		    $this->json .='], "pID": "'.$this->post->getId().'"} ';
