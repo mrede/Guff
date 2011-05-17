@@ -12,6 +12,7 @@ class PostForm extends BasePostForm
 {
   public function configure()
   {
+      $this->disableLocalCSRFProtection();
 		unset(
 			$this['created_at'],
 			$this['updated_at'],
