@@ -32,6 +32,7 @@ class postActions extends sfActions
     $this->processForm($request, $this->form);
     $this->setLayout(false);
     $this->setTemplate('messages');
+    $this->logMessage("End of Create");
     $this->executeMessages($request);
     //$this->forward('post','messages');
     //$this->redirect('/post/messages/'.$this->post->getLatitude().'/'.$this->post->getLongitude().'/'.$this->post->getId());
@@ -105,6 +106,11 @@ class postActions extends sfActions
       {
           $this->redirect('post/new?id='.$this->post->getId());
       }
+    }
+    else
+    {
+        $this->logMessage("INVALID FORM");
+        $this->logMessage($form->renderGlobalErrors());
     }
   }
 }
