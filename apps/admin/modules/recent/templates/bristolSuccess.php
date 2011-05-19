@@ -59,7 +59,7 @@ $(document).ready(function(){
 });
 
 var attributes = {};
-   var flashvars = {};
+   var flashvars = {key: '<?php echo sfConfig::get('app_google_api_key')?>'};
    var params =   {wmode:'transparent'};
 swfobject.embedSWF(
              "/map.swf",
