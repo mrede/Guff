@@ -14,3 +14,9 @@ stage:
     param:
       username: guff
       password: guff
+
+prod:
+  doctrine:
+    param:
+      username: guff
+      password: guff
