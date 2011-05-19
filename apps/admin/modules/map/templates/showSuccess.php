@@ -32,8 +32,8 @@ console.log(data, status);
     
     init:function() {
         console.log("INIT");
-        var lat = String(Math.round(<?php echo $mapView->getLatitude()?>*1000)).replace("-", "m");
-        var lng = String(Math.round(<?php echo $mapView->getLongitude()?>*1000)).replace("-", "m");
+        var lat = String(Math.round(<?php echo $mapView->getLatitude()?>*10)).replace("-", "m");
+        var lng = String(Math.round(<?php echo $mapView->getLongitude()?>*10)).replace("-", "m");
         var channelName = 'c'+lat+'_'+lng;//'c51571_m106';
 
         var channel = pusher.subscribe(channelName);

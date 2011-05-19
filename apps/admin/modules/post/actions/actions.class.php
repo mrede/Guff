@@ -89,8 +89,8 @@ class postActions extends sfActions
          //// var lat = String(Math.round($('body').data('lat')*1000)).replace("-", "m");
          // var lng = String(Math.round($('body').data('lng')*1000)).replace("-", "m");
     	//	var channelName = lat+"_"+lng;
-            $lat = str_replace('-', 'm', round($this->post->getLatitude()*1000));
-            $lng = str_replace('-', 'm', round($this->post->getLongitude()*1000));
+            $lat = str_replace('-', 'm', round($this->post->getLatitude()*10));
+            $lng = str_replace('-', 'm', round($this->post->getLongitude()*10));
             $this->logMessage("Pushing to channel $lat _ $lng");
             $pusher->trigger('c'.$lat.'_'.$lng, 'new_guff', $this->post->getText(), $request->getParameter('sockID'));
             $this->logMessage("PUSHED");
