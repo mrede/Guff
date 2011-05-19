@@ -22,4 +22,18 @@ class Post extends BasePost
 	    return $arr;
 	}
 	
+	public function toAdminArray()
+	{
+	    $arr = array();
+	    $arr['i'] = $this->getId();
+	    $arr['t'] = $this->getText();
+	    $now = intval(Date('U', time()));
+	    $exp = intval(Date('U', strtotime('+2 hour', strtotime($this->getCreatedAt()))));
+	    $arr['e'] = ($exp-$now);
+	    $arr['lat'] = $this->getLatitude();
+	    $arr['lng'] = $this->getLongitude();
+	    $arr['spank'] = '123';
+	    return $arr;
+	}
+	
 }
