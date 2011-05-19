@@ -2,7 +2,6 @@ Post:
   connection: doctrine
   actAs:
     Timestampable:
-    Geographical:
   columns:
     id:
       type: integer(4)
@@ -19,4 +18,38 @@ Post:
       autoincrement: false
     text: string(148)
     accuracy: int
+    latitude: float(15,6)
+    longitude: float(15,6)
     
+MapView:
+  connection: doctrine
+  actAs:
+    Timestampable:
+
+      
+        
+    Sluggable:
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    name:
+      type: string(50)
+      unique: true
+    pitch:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+    yaw:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+    roll:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+    latitude: float(15,6)
+    longitude: float(15,6)

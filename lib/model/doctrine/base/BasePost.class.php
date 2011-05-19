@@ -11,15 +11,21 @@ Doctrine_Manager::getInstance()->bindComponent('Post', 'doctrine');
  * @property string $ip
  * @property string $text
  * @property int $accuracy
+ * @property float $latitude
+ * @property float $longitude
  * 
- * @method integer getId()       Returns the current record's "id" value
- * @method string  getIp()       Returns the current record's "ip" value
- * @method string  getText()     Returns the current record's "text" value
- * @method int     getAccuracy() Returns the current record's "accuracy" value
- * @method Post    setId()       Sets the current record's "id" value
- * @method Post    setIp()       Sets the current record's "ip" value
- * @method Post    setText()     Sets the current record's "text" value
- * @method Post    setAccuracy() Sets the current record's "accuracy" value
+ * @method integer getId()        Returns the current record's "id" value
+ * @method string  getIp()        Returns the current record's "ip" value
+ * @method string  getText()      Returns the current record's "text" value
+ * @method int     getAccuracy()  Returns the current record's "accuracy" value
+ * @method float   getLatitude()  Returns the current record's "latitude" value
+ * @method float   getLongitude() Returns the current record's "longitude" value
+ * @method Post    setId()        Sets the current record's "id" value
+ * @method Post    setIp()        Sets the current record's "ip" value
+ * @method Post    setText()      Sets the current record's "text" value
+ * @method Post    setAccuracy()  Sets the current record's "accuracy" value
+ * @method Post    setLatitude()  Sets the current record's "latitude" value
+ * @method Post    setLongitude() Sets the current record's "longitude" value
  * 
  * @package    Guff
  * @subpackage model
@@ -55,14 +61,22 @@ abstract class BasePost extends sfDoctrineRecord
         $this->hasColumn('accuracy', 'int', null, array(
              'type' => 'int',
              ));
+        $this->hasColumn('latitude', 'float', 15, array(
+             'type' => 'float',
+             'length' => 15,
+             'scale' => '6',
+             ));
+        $this->hasColumn('longitude', 'float', 15, array(
+             'type' => 'float',
+             'length' => 15,
+             'scale' => '6',
+             ));
     }
 
     public function setUp()
     {
         parent::setUp();
         $timestampable0 = new Doctrine_Template_Timestampable();
-        $geographical0 = new Doctrine_Template_Geographical();
         $this->actAs($timestampable0);
-        $this->actAs($geographical0);
     }
 }

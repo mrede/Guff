@@ -5,6 +5,11 @@
 homepage:
   url:   /
   param: { module: recent, action: index }
+  
+#MapView
+mapview:
+  url: /mapview/:slug
+  param: { module: map, action: show }
 
 ajax_list:
   url: /post/messages/:lat.:lat2/:lng.:lng2

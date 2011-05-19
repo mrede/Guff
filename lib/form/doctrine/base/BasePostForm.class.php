@@ -19,21 +19,21 @@ abstract class BasePostForm extends BaseFormDoctrine
       'ip'         => new sfWidgetFormInputText(),
       'text'       => new sfWidgetFormInputText(),
       'accuracy'   => new sfWidgetFormInputText(),
-      'created_at' => new sfWidgetFormDateTime(),
-      'updated_at' => new sfWidgetFormDateTime(),
       'latitude'   => new sfWidgetFormInputText(),
       'longitude'  => new sfWidgetFormInputText(),
+      'created_at' => new sfWidgetFormDateTime(),
+      'updated_at' => new sfWidgetFormDateTime(),
     ));
 
     $this->setValidators(array(
       'id'         => new sfValidatorChoice(array('choices' => array($this->getObject()->get('id')), 'empty_value' => $this->getObject()->get('id'), 'required' => false)),
       'ip'         => new sfValidatorString(array('max_length' => 16)),
-      'text'       => new sfValidatorString(array('max_length' => 148, 'required' => false, 'trim' => true)),
+      'text'       => new sfValidatorString(array('max_length' => 148, 'required' => false)),
       'accuracy'   => new sfValidatorPass(array('required' => false)),
+      'latitude'   => new sfValidatorNumber(array('required' => false)),
+      'longitude'  => new sfValidatorNumber(array('required' => false)),
       'created_at' => new sfValidatorDateTime(),
       'updated_at' => new sfValidatorDateTime(),
-      'latitude'   => new sfValidatorPass(array('required' => false)),
-      'longitude'  => new sfValidatorPass(array('required' => false)),
     ));
 
     $this->widgetSchema->setNameFormat('post[%s]');
