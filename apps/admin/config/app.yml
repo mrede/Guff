@@ -6,6 +6,6 @@
 
 prod:
   google_api_key: ABQIAAAAdYb4U_h3VwUzwRlRjzWM9RQlMwgzQZyGZpwuYyJ0TjKwlMOcWBSRrAfmpjGa4lMXG02C9Txe_6KbQQ
-
+  
 dev:
   google_api_key: ABQIAAAAdYb4U_h3VwUzwRlRjzWM9RTCB_7BxIWVckxNfPtK2Ke0O5MkBxQQXKTl9kH7fMTJjhtPw9ThRM7XKQ

@@ -10,8 +10,7 @@ var guff_geo_admin = {
     
     parseMessages:function(data, status) {
         //get msgs ul
-//        document.getElementById("flashContent").testFunc('asd');     
-
+console.log(data, status);
         $(data.posts).each(function() {
         console.log("Got messages", this.lat, this.lng);            
             document.getElementById("flashContent").testFunc( this.i, this.lat, this.lng, this.e, this.t);
@@ -82,23 +81,23 @@ swfobject.embedSWF(
              );
 
 
+function updateLoc(lat, lng, msg) {
 
-function testFunc() {
-    console.log("YUP")
+    $('#post_latitude').attr('value', lat);
+    $('#post_longitude').attr('value', lng);
+    $('#post_text').html(msg);
+
+    $.ajax({
+        url: $('#msg-post').attr('action'),
+        type: 'post',
+        data: $('#msg-post').serialize()+'&sockID='+pusher.socket_id,
+        dataType: 'json',
+        success: guff_geo_admin.parseMessages
+    });
 }
 
- 
 
-function formSend() {   
-    //var text = document.htmlForm.sendField.value;   
-    console.log(getFlashMovie("test"));
-    document.getElementById("flashContent").testFunc('asd');     
-    }    
-    
-function getTextFromFlash(str) {   
-    //document.htmlForm.receivedField.value = "From Flash: " + str;   
-    return str + " received";  
-} </script> 
+</script> 
 
 
 <a href="#" onclick="javascript:guff_geo_admin.getMessages();" />TEST</a>
@@ -106,3 +105,22 @@ function getTextFromFlash(str) {
 
 </div>
 
+<div style='display:none'>
+<form id='msg-post' action="/message" method="post" <?php $form->isMultipart() and print 'enctype="multipart/form-data" ' ?>>
+<?php if (!$form->getObject()->isNew()): ?>
+<input type="hidden" name="sf_method" value="put" />
+<?php endif; ?>
+  
+  <?php echo $form->renderGlobalErrors() ?>
+
+  <?php echo $form['text']->renderLabel('Post a message [<span id="counter">148</span> characters]') ?><br/>
+  
+          <?php echo $form['text']->renderError() ?>
+          <?php echo $form['text'] ?><br/>
+		  <strong>Your message will be visible within a 100m range of here for 2hrs</strong> <!-- / Accuracy: <span id="accuracy"> --></span><br/>
+		  <input id='submit_but' data-inline="true" data-ajax="false" data-theme="b" class='button' type="submit" value="send"/>
+		   <?php echo $form->renderHiddenFields()?>
+          
+      
+</form>
+</div>

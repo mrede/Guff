@@ -77,6 +77,10 @@ class mapActions extends sfActions
         
         $this->mapView = Doctrine::getTable('MapView')->findOneBySlug($slug);
         
+        $post = new Post();
+        $post->setLatitude($this->mapView->getLatitude());
+        $post->setLongitude($this->mapView->getLongitude());
+        $this->form = new PostForm($post);
 
     }
 }

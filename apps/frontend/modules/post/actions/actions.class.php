@@ -104,6 +104,8 @@ class postActions extends sfActions
 
       if (!$request->isXmlHttpRequest())
       {
+          $this->logMessage("Not XML request");
+          
           $this->redirect('post/new?id='.$this->post->getId());
       }
     }

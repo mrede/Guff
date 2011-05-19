@@ -27,6 +27,11 @@ ajax_list3:
   url: /post/messages/:lat.:lat2/:lng.:lng2
   param: { module: post, action: messages}
 
+msg_put:
+  url: message
+  requirements:     
+  sf_method: [put] 
+  param: { module: post, action: create}
 
 # generic rules
 # please, remove them by adding more specific rules
