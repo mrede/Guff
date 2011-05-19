@@ -6,6 +6,23 @@ homepage:
   url:   /
   param: { module: recent, action: index }
 
+ajax_list:
+  url: /post/messages/:lat.:lat2/:lng.:lng2
+  param: { module: post, action: messages}
+
+ajax_list_post:
+  url: /post/messages/:lat.:lat2/:lng.:lng2/:post_id
+  param: { module: post, action: messages}
+
+ajax_list2:
+  url: /post/messages/:lat/:lng
+  param: { module: post, action: messages}
+
+ajax_list3:
+  url: /post/messages/:lat.:lat2/:lng.:lng2
+  param: { module: post, action: messages}
+
+
 # generic rules
 # please, remove them by adding more specific rules
 default_index:
