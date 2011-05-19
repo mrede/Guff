@@ -7,6 +7,24 @@
     <link rel="shortcut icon" href="/favicon.ico" />
     <?php include_stylesheets() ?>
     <?php include_javascripts() ?>
+    
+    
+    <script src="http://js.pusherapp.com/1.8.2/pusher.min.js" type="text/javascript"></script>
+
+	<script type="text/javascript">
+	<?php if ($_SERVER['ENVIRONMENT']=='DEV'):?>
+        // Enable pusher logging - don't include this in production
+        Pusher.log = function(message) {
+            if (window.console && window.console.log) window.console.log(message);
+        };
+        
+        // Flash fallback logging - don't include this in production
+        WEB_SOCKET_DEBUG = true;
+        
+    <?php endif?>
+        var pusher = new Pusher('6b5e2c3e82788a7a4422');
+      </script>
+      
   </head>
   <body>
     <?php echo $sf_content ?>
