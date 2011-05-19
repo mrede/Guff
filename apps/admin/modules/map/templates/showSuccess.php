@@ -20,8 +20,8 @@ var guff_geo_admin = {
     },
     
     getMessages:function() {
-        var lat = 51.57119;//$('body').data('lat');
-        var lng = -0.10613;//   $('body').data('lng');
+        var lat = <?php echo $mapView->getLatitude()?>;//$('body').data('lat');
+        var lng = <?php echo $mapView->getLongitude()?>;//   $('body').data('lng');
         console.log("GETTING");
         $.ajax({
             url: "/post/messages/"+lat+"/"+lng,
@@ -33,9 +33,9 @@ var guff_geo_admin = {
     
     init:function() {
         console.log("INIT");
-        var lat = String(Math.round(51.57)).replace("-", "m");
-        var lng = String(Math.round($('body').data('lng')*1000)).replace("-", "m");
-        var channelName = 'c51571_m106';
+        var lat = String(Math.round(<?php echo $mapView->getLatitude()?>*1000)).replace("-", "m");
+        var lng = String(Math.round(<?php echo $mapView->getLongitude()?>*1000)).replace("-", "m");
+        var channelName = 'c'+lat+'_'+lng;//'c51571_m106';
 
         var channel = pusher.subscribe(channelName);
         console.log("CHannel", channel);
