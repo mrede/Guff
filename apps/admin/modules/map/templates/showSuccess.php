@@ -10,10 +10,9 @@ var guff_geo_admin = {
     
     parseMessages:function(data, status) {
         //get msgs ul
-console.log(data, status);
         $(data.posts).each(function() {
         console.log("Got messages", this.lat, this.lng);            
-            document.getElementById("flashContent").testFunc( this.i, this.lat, this.lng, this.e, this.t);
+            document.getElementById("flashContent").testFunc( this.i, this.lat, this.lng, this.t, this.e);
         });
         
     },
