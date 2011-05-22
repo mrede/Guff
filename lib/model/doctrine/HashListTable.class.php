@@ -16,4 +16,12 @@ class HashListTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('HashList');
     }
+    
+    public function getRecent()
+   	{
+   		$q = $this->createQuery()
+   						->addWhere('created_at < NOW()')
+   						->orderBy("created_at desc");
+   		return $q->execute();
+   	}
 }
