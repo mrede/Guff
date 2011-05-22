@@ -12,7 +12,7 @@ HashList:
       type: string(25)
 
 
-HashStats:
+HashStat:
   actAs:
     Timestampable:
   columns:
