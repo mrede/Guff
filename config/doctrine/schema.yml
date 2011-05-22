@@ -1,3 +1,29 @@
+HashList:
+  actAs:
+    Timestampable:
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+    tag:
+      type: string(25)
+
+
+HashStats:
+  actAs:
+    Timestampable:
+  columns:
+    id:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+      primary: true
+      autoincrement: true
+  
+
 Post:
   connection: doctrine
   actAs:

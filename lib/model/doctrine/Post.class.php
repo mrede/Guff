@@ -36,4 +36,18 @@ class Post extends BasePost
 	    return $arr;
 	}
 	
+	public function parseHashTags()
+	{
+	    $matches = array();
+	    $match = preg_match_all('/(^|\s)#(\w+)/', $this->getText(), $matches);
+
+	    if ($match) {
+	        foreach ($matches[2] as $m) {
+	            $h = new HashList();
+	            $h->tag = $m;
+	            $h->save();
+	        }
+	    }
+	}
+	
 }

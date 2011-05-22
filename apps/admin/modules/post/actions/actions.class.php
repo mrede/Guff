@@ -81,19 +81,20 @@ class postActions extends sfActions
           $this->post = $form->save();
           $this->post->setText(strip_tags($this->post->getText()));
           $this->post->save();
+          
           $this->logMessage("TEXT:".$this->post->getText());
           $this->logMessage("About to push");
           $pusher = new Pusher('6b5e2c3e82788a7a4422', '83a0dd059dcc0e4e6ef9', '4844');
 
           //Get channel name
-         //// var lat = String(Math.round($('body').data('lat')*1000)).replace("-", "m");
-         // var lng = String(Math.round($('body').data('lng')*1000)).replace("-", "m");
-    	//	var channelName = lat+"_"+lng;
-            $lat = str_replace('-', 'm', round($this->post->getLatitude()*10));
-            $lng = str_replace('-', 'm', round($this->post->getLongitude()*10));
-            $this->logMessage("Pushing to channel $lat _ $lng");
-            $pusher->trigger('c'.$lat.'_'.$lng, 'new_guff', $this->post->getText(), $request->getParameter('sockID'));
-            $this->logMessage("PUSHED");
+          //// var lat = String(Math.round($('body').data('lat')*1000)).replace("-", "m");
+          // var lng = String(Math.round($('body').data('lng')*1000)).replace("-", "m");
+    	  //	var channelName = lat+"_"+lng;
+          $lat = str_replace('-', 'm', round($this->post->getLatitude()*10));
+          $lng = str_replace('-', 'm', round($this->post->getLongitude()*10));
+          $this->logMessage("Pushing to channel $lat _ $lng");
+          $pusher->trigger('c'.$lat.'_'.$lng, 'new_guff', $this->post->getText(), $request->getParameter('sockID'));
+          $this->logMessage("PUSHED");
 
           if (!$request->isXmlHttpRequest())
           {
@@ -108,5 +109,6 @@ class postActions extends sfActions
             $this->logMessage($form->renderGlobalErrors());
         }
       }
+      
 	
 }
