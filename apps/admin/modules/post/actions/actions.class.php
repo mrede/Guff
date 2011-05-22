@@ -38,9 +38,15 @@ class postActions extends sfActions
 		$posts = Doctrine::getTable('Post')->getNearby($lat, $lng, 2);
 		$this->setLayout(false);
 		
+		//Get hash ranks
+		$topFive = HashStatTable::getInstance()->getTopFive();
+        
+        
+		
 		$this->json = '{"posts": [';
 		foreach ($posts as $p)
 		{
+		    $p->setHashRank($topFive);
 		    $this->json .= json_encode($p->toAdminArray()).',';
 		}
 		if (count($posts)>0) {
@@ -81,7 +87,7 @@ class postActions extends sfActions
           $this->post = $form->save();
           $this->post->setText(strip_tags($this->post->getText()));
           $this->post->save();
-          
+          $this->post->parseHashTags();
           $this->logMessage("TEXT:".$this->post->getText());
           $this->logMessage("About to push");
           $pusher = new Pusher('6b5e2c3e82788a7a4422', '83a0dd059dcc0e4e6ef9', '4844');

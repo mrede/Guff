@@ -12,4 +12,15 @@
  */
 class HashStat extends BaseHashStat
 {
+    protected $rank;
+    
+    public function getRank()
+    {
+        return $this->rank;
+    }
+    
+    public function setRank($val)
+    {
+        $this->rank = $val;
+    }
 }

@@ -11,8 +11,8 @@ var guff_geo_admin = {
     parseMessages:function(data, status) {
         //get msgs ul
         $(data.posts).each(function() {
-        console.log("Got messages", this.lat, this.lng);            
-            document.getElementById("flashContent").testFunc( this.i, this.lat, this.lng, this.t, this.e);
+        console.log("Got messages", this.lat, this.lng, this.rk);            
+            document.getElementById("flashContent").testFunc( this.i, this.lat, this.lng, this.t, this.e, this.rk);
         });
         
     },

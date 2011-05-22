@@ -29,8 +29,17 @@ class HashStatTable extends Doctrine_Table
     public function getTopFive()
     {
         $q = $this->createQuery()
-   						->addWhere('created_at < NOW()')
-   						->orderBy("created_at desc");
-   		return $q->execute();
+                        ->limit(5)
+   						->orderBy("total desc");
+   		
+   		$stats =  $q->execute();
+   		
+        $rank=5;
+        foreach ($stats as $t) {
+            $t->setRank($rank);
+            $rank--;
+        }
+        
+        return $stats;
     }
 }

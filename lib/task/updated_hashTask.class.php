@@ -60,6 +60,9 @@ EOF;
         $hs->save();
     }
     
+    $rank = HashStatTable::getInstance()->getTopFive();
+    $post = PostTable::getInstance()->findOneById(5);
+    print "RANKING".$post->getHashRanking($rank);
     print_r($map);
   }
 }

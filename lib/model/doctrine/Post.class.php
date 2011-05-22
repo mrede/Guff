@@ -12,6 +12,9 @@
  */
 class Post extends BasePost
 {
+    
+    protected $_hashRank = 0;
+    
     public function toPublicArray()
 	{
 	    $arr = array();
@@ -32,22 +35,59 @@ class Post extends BasePost
 	    $arr['e'] = ($exp-$now);
 	    $arr['lat'] = $this->getLatitude();
 	    $arr['lng'] = $this->getLongitude();
-	    $arr['spank'] = '123';
+	    $arr['rk'] = $this->_hashRank;
 	    return $arr;
 	}
 	
 	public function parseHashTags()
 	{
+	    $matches = $this->getHashTags();
+        foreach ($matches as $m) {
+            $h = new HashList();
+            $h->tag = $m;
+            $h->save();
+        }
+
+	}
+	
+	public function getHashTags()
+	{
 	    $matches = array();
 	    $match = preg_match_all('/(^|\s)#(\w+)/', $this->getText(), $matches);
 
 	    if ($match) {
-	        foreach ($matches[2] as $m) {
-	            $h = new HashList();
-	            $h->tag = $m;
-	            $h->save();
+	        if (count($matches)>=2 )
+	        {
+	            return $matches[2];
+            }
+        }
+        return array();
+	}
+	
+	public function getHashRanking($topHashes)
+	{
+	    return $this->_hashRank;
+	}
+	
+	public function setHashRank($topHashes)
+	{
+	    $tags = $this->getHashTags();
+	    $rank = 0;
+	    foreach ($topHashes as $th) 
+	    {
+	        foreach ($tags as $t)
+	        {
+	            if ($t == $th->getTag())
+	            {
+	                
+	                if ($th->getRank() > $rank) {
+	                    $rank = $th->getRank();
+	                }
+	            }
 	        }
 	    }
+	    $this->_hashRank = $rank;
+
 	}
 	
 }
