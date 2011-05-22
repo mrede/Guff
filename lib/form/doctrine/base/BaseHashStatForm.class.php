@@ -1,16 +1,16 @@
 <?php
 
 /**
- * HashStats form base class.
+ * HashStat form base class.
  *
- * @method HashStats getObject() Returns the current form's model object
+ * @method HashStat getObject() Returns the current form's model object
  *
  * @package    Guff
  * @subpackage form
  * @author     Your name here
  * @version    SVN: $Id: sfDoctrineFormGeneratedTemplate.php 29553 2010-05-20 14:33:00Z Kris.Wallsmith $
  */
-abstract class BaseHashStatsForm extends BaseFormDoctrine
+abstract class BaseHashStatForm extends BaseFormDoctrine
 {
   public function setup()
   {
@@ -26,7 +26,7 @@ abstract class BaseHashStatsForm extends BaseFormDoctrine
       'updated_at' => new sfValidatorDateTime(),
     ));
 
-    $this->widgetSchema->setNameFormat('hash_stats[%s]');
+    $this->widgetSchema->setNameFormat('hash_stat[%s]');
 
     $this->errorSchema = new sfValidatorErrorSchema($this->validatorSchema);
 
@@ -37,7 +37,7 @@ abstract class BaseHashStatsForm extends BaseFormDoctrine
 
   public function getModelName()
   {
-    return 'HashStats';
+    return 'HashStat';
   }
 
 }
