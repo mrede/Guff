@@ -22,8 +22,14 @@ HashStat:
       unsigned: true
       primary: true
       autoincrement: true
-  
-
+    tag:
+      type: string(25)
+    
+    total:
+      type: integer(4)
+      fixed: false
+      unsigned: true
+        
 Post:
   connection: doctrine
   actAs:

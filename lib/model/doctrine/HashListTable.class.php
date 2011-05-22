@@ -19,8 +19,10 @@ class HashListTable extends Doctrine_Table
     
     public function getRecent()
    	{
-   		$q = $this->createQuery()
-   						->addWhere('created_at < NOW()')
+   		$date = date('Y-m-d H:i:s', time()-86400);
+
+        $q = $this->createQuery()
+   						->addWhere('created_at > "'.$date.'"')
    						->orderBy("created_at desc");
    		return $q->execute();
    	}

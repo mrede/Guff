@@ -16,4 +16,21 @@ class HashStatTable extends Doctrine_Table
     {
         return Doctrine_Core::getTable('HashStat');
     }
+    
+    public function deleteAll()
+    {
+        $recs = $this->findAll();
+        foreach ($recs as $r)
+        {
+            $r->delete();
+        }
+    }
+    
+    public function getTopFive()
+    {
+        $q = $this->createQuery()
+   						->addWhere('created_at < NOW()')
+   						->orderBy("created_at desc");
+   		return $q->execute();
+    }
 }

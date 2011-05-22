@@ -49,6 +49,17 @@ EOF;
         }
     }
     
+    //Delete all from hashStats
+    HashStatTable::getInstance()->deleteAll();
+    
+    foreach ($map as $key => $count)
+    {
+        $hs = new HashStat();
+        $hs->tag = $key;
+        $hs->total = $count;
+        $hs->save();
+    }
+    
     print_r($map);
   }
 }
