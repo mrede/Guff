@@ -6,8 +6,8 @@ all:
     class: sfDoctrineDatabase
     param:
       dsn:      mysql:host=127.0.0.1;dbname=guff
-      username: root
-      password: 
+      username: guff_admin
+      password: guff_admin
 
 stage:
   doctrine:
