@@ -12,8 +12,9 @@ all:
 stage:
   doctrine:
     param:
-      username: guff
-      password: guff
+      dsn:      mysql:host=127.0.0.1;dbname=guff_stage
+      username: guff_stage
+      password: guff_stage
 
 prod:
   doctrine:
