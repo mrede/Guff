@@ -23,4 +23,12 @@ class HashStat extends BaseHashStat
     {
         $this->rank = $val;
     }
+    
+    public function toPublicArray()
+   	{
+   	    $arr = array();
+   	    $arr['tag'] = $this->getTag();
+   	    $arr['rank'] = $this->rank;
+   	    return $arr;
+   	}
 }
