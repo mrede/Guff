@@ -17,6 +17,19 @@ class postActions extends sfActions
 
 
   }
+  
+  public function executeHashRanking(sfWebRequest $request)
+  {
+      $stats = HashStatTable::getInstance()->getTopFive();
+      $this->json = '{"stats": [';
+      foreach ($stats as $s) {
+          $this->json .= json_encode($s->toPublicArray()).',';
+      }
+      //Remove last comma
+      $this->json = substr($this->json, 0, -1);
+      $this->json .=']} ';
+      $this->getResponse()->setHttpHeader('Content-type','application/json');
+  }
 
   public function executeNew(sfWebRequest $request)
   {
