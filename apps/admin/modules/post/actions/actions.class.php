@@ -35,7 +35,7 @@ class postActions extends sfActions
     		$postExecute = true;
 		}
 		
-		$posts = Doctrine::getTable('Post')->getNearby($lat, $lng, 2);
+		$posts = Doctrine::getTable('Post')->getNearby($lat, $lng, 1);
 		$this->setLayout(false);
 		
 		//Get hash ranks
