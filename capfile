@@ -1,0 +1,84 @@
+role :production,			"label@46.137.108.123"
+role :staging,    			"label@46.137.108.123"
+role :dev,						"label@46.137.108.123"
+
+set :website, "guff.me.uk"
+set :dev_hostname, 			"stage"
+set :staging_hostname, 	"stage"
+set :production_hostname, "prod"
+
+set :git_repo, "git@github.com:mrede/Guff.git"
+
+
+namespace :deploy do
+  desc "Deploy a Dev version of the site"
+  task :dev, :roles => :dev do
+    
+    release_dir = "/home/http/#{website}/#{dev_hostname}"
+      
+    run "cd #{release_dir} && git pull"
+
+    
+  end
+
+  desc "Deploy site to the staging environment"
+	task :staging, :roles => :staging do
+	  
+	  doDeploy("stage")
+	   
+  end
+  
+  desc "Deploy site to the live environment"
+  task :production, :roles => :production do
+	  
+	  doDeploy("prod")
+	  
+ 
+  end
+  
+  def doDeploy(target) 
+    puts "doing it #{website} #{target}"
+    #Prompt for Release Tag
+    set(:release_version, Capistrano::CLI.ui.ask("Release Version (e.g. 0.1): "))
+
+    if eval("#{release_version.to_s.empty?}") 
+      puts "Release must be specified"
+      exit
+    end
+
+    # Get release Date
+    prompt_with_default(:release_date, "#{Time.now.strftime('%Y-%m-%d')}", "Release Date: ")
+
+
+    # Build dir vars
+    release_tag = "release-#{release_version}-#{release_date}"
+    release = "#{release_tag}_#{Time.now.to_i}"
+    release_dir = "/home/http/#{website}/#{target}-releases/#{release}"
+    release_core_dir = "/home/http/#{website}/#{target}-releases/"
+    current_dir = "/home/http/#{website}/#{target}"
+
+    puts "Release tag: #{release_tag}"
+
+    run "git clone #{git_repo} #{release_dir}"
+    run "cd #{release_dir} && git checkout #{release_tag}  "
+
+    # Remove all the old releases
+    #run "~/bin/rm-old #{release_core_dir} 5"
+    
+    #Remove current
+    run "rm -f #{current_dir}"
+    # Link new release to current dir
+    run "ln -s #{release_dir} #{current_dir}"
+    
+    run "cd #{release_dir} && mkdir logs cache && chmod 775 logs/ cache/"
+  end
+  
+  def prompt_with_default(var, default, prompt)
+    set(var) do
+      Capistrano::CLI.ui.ask "#{prompt} [#{default}] : "
+    end
+    set var, default if eval("#{var.to_s}.empty?")
+  end
+  
+end
+
