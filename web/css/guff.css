@@ -5,3 +5,7 @@ ul li span { font-weight: normal; font-style: italic; }
 .ui-li-desc {
 white-space: normal;
 }
+form em {display:block;padding:0px;margin:0;}
+#msg-post .ui-btn {margin-top: 0.2em !important;}
+#popular-tags {margin: 0; padding: 0; list-style: none;}
+#popular-tags li { padding-right: 5px; float: left;}

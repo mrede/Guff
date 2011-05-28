@@ -1,7 +1,7 @@
 <div data-role="page" id="location">
 	<div data-role="header" data-backbtn="false">
 		<h1>Guff</h1>
-		<a href="#about" data-transition='slideup' data-role="button" data-inline="true">About</a>
+		<a href="#help" data-transition='slideup' data-role="button" data-inline="true">Help</a>
 	</div>
 	<div data-role="content">
 		<h3 id="location-message">Finding your location...</h3>
@@ -15,12 +15,13 @@
 	</div>
 </div>
 
-<div data-role="page" id="about">
+<div data-role="page" id="help">
 	<div data-role="header">
 	   	<h1>Guff</h1>
 		<a href='#location' class='ui-btn-left ui-btn-back' data-transition='slideup' data-icon='arrow-l'>Back</a>
   	</div>
 	<div data-role="content">
+		<h3>Help</h3>
 		<h3>About</h3>
 		<p>It's not big and its not clever. Guff is just some experimental fun.</p> 
 		<p>Unnecessary obstacles often make for interesting results.</p>
@@ -46,6 +47,17 @@
 			<?php include_partial("form", array('form' => $form))?>
 		</div>
 		<h2>Messages near you</h2>
+		<hr/>
+		<h4 style="margin:0; padding:0;">Popular Tags:</h4>
+		<ul id="popular-tags">
+			<li class="ui-link">Tag 1</li>
+			<li class="ui-link">Tag 2</li>
+			<li class="ui-link">Tag 2</li>
+			<li class="ui-link">Tag 2</li>
+			<li class="ui-link">Tag 2</li>
+		</ul>
+		<br/>
+		<hr/>
 		<ul data-role="listview" role="listbox" data-inset="true" id="msgs" data-theme='d'>
 
 		</ul>

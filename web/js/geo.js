@@ -28,6 +28,22 @@ var guff_geo = {
             $('textarea').val('');
         }
     },
+
+	parseHashes:function(data, status) {
+        //get msgs ul
+        var list = $('#popular-tags');
+        var append = '';
+        alert(data);
+		// $(data).each(function() {
+        //             left_to_go = guff_geo.leftToGo(this.e);
+        //             append += '<li><p style="font-size: 1em;">'+this.t+'</p><span>'+left_to_go+'</span></li>';
+        //         });
+        //         list.html(append);
+        //         if ($('#msgs').listview()) {
+        //             $('#msgs').listview('refresh');
+        //             $('textarea').val('');
+        //         }
+    },
     
     getMessages:function() {
         var lat = $('body').data('lat');
@@ -38,6 +54,16 @@ var guff_geo = {
             type: 'get',
             dataType: 'json',
             success: guff_geo.parseMessages
+        });
+    },
+
+	getTopHash:function() {
+        
+        $.ajax({
+            url: "/post/hashRanking",
+            type: 'get',
+            dataType: 'json',
+            success: guff_geo.parseHashes
         });
     },
 
@@ -95,6 +121,7 @@ var guff_geo = {
             $('body').data('lat', location.coords.latitude);
             $('body').data('lng', location.coords.longitude);
             guff_geo.getMessages();
+			guff_geo.getTopHash();
 
             //$("#dump").append("Lat: "+location.coords.latitude+", Lng: "+location.coords.longitude+", Acc:"+location.coords.accuracy)
             $("#accuracy").text(location.coords.accuracy);
@@ -241,6 +268,13 @@ $(document).bind("mobileinit", function(){
 
 $(document).ready(function(){
     guff_geo.init();
+
+	if($("#popular-tags").length>0) {
+		$("#popular-tags dd").bind("click", function(ev){
+			$("#post_text").html($(this).text());
+			$("#post_text").focus();
+		});
+	}
 
     var max_length = 148;    
     whenkeydown = function(max_length)
