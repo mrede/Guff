@@ -22,6 +22,10 @@
   	</div>
 	<div data-role="content">
 		<h3>Help</h3>
+		<p><strong>Problems with location?</strong></p>
+		<p>iPhone 3's can be a bit rubbish at this when it comes to web apps. Try opening the map application that comes with the iPhone. Let it locate you. Then go back to Guff.</p>
+		<p><strong>I want it on my phone with my other apps</strong></p>
+		<p>There should be useful popup that helps you do this. If not just click bookmark (on iPhone) and select add to home screen.</p> 	
 		<h3>About</h3>
 		<p>It's not big and its not clever. Guff is just some experimental fun.</p> 
 		<p>Unnecessary obstacles often make for interesting results.</p>
