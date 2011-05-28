@@ -9,6 +9,13 @@ all:
       username: guff_admin
       password: guff_admin
 
+dev:
+  doctrine:
+    param:
+      dsn:      mysql:host=127.0.0.1;dbname=guff
+      username: root
+      password: 
+      
 stage:
   doctrine:
     param:
