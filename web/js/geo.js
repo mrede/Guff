@@ -30,15 +30,19 @@ var guff_geo = {
     },
 
 	parseHashes:function(data, status) {
-		
         //get msgs ul
         var list = $('#popular-tags');
         var append = '';
 		
 		$(data.stats).each(function() {
-            append += '<li class"ui-link">'+this.tag+'</li>';
+            append += '<li class="ui-link">#'+this.tag+'</li>';
         });
-        list.html(append);
+		list.html(append);
+		$('.ui-link').bind("click", function(ev){
+			$("#post_text").html($(this).text());
+			$("#post_text").focus();
+		});
+        
     },
     
     getMessages:function() {
@@ -263,13 +267,6 @@ $(document).bind("mobileinit", function(){
 
 $(document).ready(function(){
     guff_geo.init();
-
-	if($("#popular-tags").length>0) {
-		$("#popular-tags dd").bind("click", function(ev){
-			$("#post_text").html($(this).text());
-			$("#post_text").focus();
-		});
-	}
 
     var max_length = 148;    
     whenkeydown = function(max_length)
