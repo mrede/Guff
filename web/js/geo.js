@@ -30,19 +30,15 @@ var guff_geo = {
     },
 
 	parseHashes:function(data, status) {
+		alert(data);
         //get msgs ul
         var list = $('#popular-tags');
         var append = '';
-        alert(data);
-		// $(data).each(function() {
-        //             left_to_go = guff_geo.leftToGo(this.e);
-        //             append += '<li><p style="font-size: 1em;">'+this.t+'</p><span>'+left_to_go+'</span></li>';
-        //         });
-        //         list.html(append);
-        //         if ($('#msgs').listview()) {
-        //             $('#msgs').listview('refresh');
-        //             $('textarea').val('');
-        //         }
+		alert(data.stats);
+		$(data.stats).each(function() {
+            append += '<li class"ui-link">'+this.tag+'</li>';
+        });
+        list.html(append);
     },
     
     getMessages:function() {
@@ -58,7 +54,6 @@ var guff_geo = {
     },
 
 	getTopHash:function() {
-        
         $.ajax({
             url: "/post/hashRanking",
             type: 'get',

@@ -50,11 +50,6 @@
 		<hr/>
 		<h4 style="margin:0; padding:0;">Popular Tags:</h4>
 		<ul id="popular-tags">
-			<li class="ui-link">Tag 1</li>
-			<li class="ui-link">Tag 2</li>
-			<li class="ui-link">Tag 2</li>
-			<li class="ui-link">Tag 2</li>
-			<li class="ui-link">Tag 2</li>
 		</ul>
 		<br/>
 		<hr/>

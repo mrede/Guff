@@ -30,7 +30,7 @@ Doctrine_Manager::getInstance()->bindComponent('Post', 'doctrine');
  * @package    Guff
  * @subpackage model
  * @author     Your name here
- * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
+ * @version    SVN: $Id: Builder.php 7691 2011-02-04 15:43:29Z jwage $
  */
 abstract class BasePost extends sfDoctrineRecord
 {
