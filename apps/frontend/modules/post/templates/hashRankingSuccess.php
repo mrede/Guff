@@ -1,1 +1,1 @@
-<?php echo $json?>
+<?php echo html_entity_decode($json)?>
