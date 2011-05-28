@@ -30,11 +30,11 @@ var guff_geo = {
     },
 
 	parseHashes:function(data, status) {
-		alert(data);
+		
         //get msgs ul
         var list = $('#popular-tags');
         var append = '';
-		alert(data.stats);
+		
 		$(data.stats).each(function() {
             append += '<li class"ui-link">'+this.tag+'</li>';
         });
@@ -209,7 +209,7 @@ var guff_geo = {
             var channelName = 'c'+lat+'_'+lng;
 
             var channel = pusher.subscribe(channelName);
-//            alert(channelName);
+
             channel.bind("new_guff", function(data) {
 
                 //guff_geo.getMessages();

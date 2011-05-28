@@ -28,6 +28,7 @@ class postActions extends sfActions
       //Remove last comma
       $this->json = substr($this->json, 0, -1);
       $this->json .=']} ';
+      $this->setLayout(false);
       $this->getResponse()->setHttpHeader('Content-type','application/json');
   }
 
