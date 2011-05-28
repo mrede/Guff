@@ -10,3 +10,11 @@ form em {display:block;padding:0px;margin:0;}
 #popular-tags {margin: 0; padding: 0; list-style: none;}
 #popular-tags li { cursor: pointer; padding: 0 10px; float: left; border-left: 1px solid #000;}
 #popular-tags li:first-child {border: none; padding-left: 0;}
+
+#popular-tags:after {
+  content: ".";
+  display: block;
+  height: 0;
+  clear: both;
+  visibility: hidden;
+}
