@@ -6,59 +6,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
 	<meta charset="utf-8">
 
-
+    <link rel="stylesheet" href="stylesheets/base.css">
+	<link rel="stylesheet" href="stylesheets/skeleton.css">
+	<link rel="stylesheet" href="stylesheets/layout.css">
+    
 	<!-- iPad/iPhone specific css below, add after your main css >
 	<link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />		
 	<link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="iphone.css" type="text/css" />		
 	-->
 	<!-- If your application is targeting iOS BEFORE 4.0 you MUST put json2.js from http://www.JSON.org/json2.js into your www directory and include it here -->
 	<script type="text/javascript" charset="utf-8" src="phonegap-1.3.0.js"></script>
-    <script type="text/javascript">
-
-
-	// If you want to prevent dragging, uncomment this section
-	/*
-	function preventBehavior(e) 
-	{ 
-      e.preventDefault(); 
-    };
-	document.addEventListener("touchmove", preventBehavior, false);
-	*/
 	
-	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
-	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
-	for more details -jm */
-	/*
-	function handleOpenURL(url)
-	{
-		// TODO: do something with the url passed in.
-	}
-	*/
-	
-	function onBodyLoad()
-	{		
-		document.addEventListener("deviceready", onDeviceReady, false);
-	}
-	
-	/* When this function is called, PhoneGap has been initialized and is ready to roll */
-	/* If you are supporting your own protocol, the var invokeString will contain any arguments to the app launch.
-	see http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
-	for more details -jm */
-	function onDeviceReady()
-	{
-		// do your thing!
-		navigator.notification.alert("PhoneGap is working")
-	}
+	<!-- vendor libraries -->
+	<script src="/javascripts/vendor/zepto/zepto.js"></script>
+    <script src="/javascripts/vendor/zepto/event.js"></script>
+    <script src="/javascripts/vendor/zepto/ajax.js"></script>
     
-    </script>
+    <!-- application -->
+    <script src="/javascripts/application.js"></script>
+    
+    <script type='text/javascript'>
+        function onBodyLoad()
+        {		
+        	document.addEventListener("deviceready", onDeviceReady, false);
+        }
+        
+        function onDeviceReady()
+        {
+        	navigator.notification.alert("PhoneGap is working");
+        	checkConnection();
+        }
+        
+        /* Check to see if they have net connection */
+        function checkConnection() {
+            var networkState = navigator.network.connection.type;
+
+            var states = {};
+            states[Connection.UNKNOWN]  = 'Unknown connection';
+            states[Connection.ETHERNET] = 'Ethernet connection';
+            states[Connection.WIFI]     = 'WiFi connection';
+            states[Connection.CELL_2G]  = 'Cell 2G connection';
+            states[Connection.CELL_3G]  = 'Cell 3G connection';
+            states[Connection.CELL_4G]  = 'Cell 4G connection';
+            states[Connection.NONE]     = 'No network connection';
+
+            alert('Connection type: ' + states[networkState]);
+            
+            ///Remember to put the init call here once we are happy all is good
+            //var guff = new Guff();
+            //guff.init();
+        }
+    </script>  
   </head>
   <body onload="onBodyLoad()">
-	<h1>Hey, it's PhoneGap!</h1>
-	<p>Don't know how to get started? Check out <em><a target="_blank" href="http://www.phonegap.com/start#ios-x4">PhoneGap Start</a></em>
-	<br />
-	<ol>
-		<li>Check your console log for any white-list rejection errors.</li>
-		<li>Add your allowed <strong>hosts</strong> in PhoneGap.plist/ExternalHosts (wildcards OK, don't enter the URL scheme)</li>
-	</ol>
+    <div class="container">
+        <button>Refresh Location</button>
+        <img id="map" src="loading.gif" />
+        <form id="post-message" action="/message" method="post">
+            <label for="post_text">Post a message [<span id="counter">148</span> characters]</label>
+            <textarea rows="4" cols="30" name="post[text]" id="post_text"></textarea>
+            <input id='submit_but' data-inline="true" data-ajax="false" data-theme="b" class='button' type="submit" value="send"/>
+            <em>Your message will be visible within a 200m range of here for 2hrs</em>
+            <input type="hidden" name="post[id]" id="post_id" />
+            <input type="hidden" name="post[accuracy]" id="post_accuracy" />
+            <input type="hidden" name="post[latitude]" id="post_latitude" />
+            <input type="hidden" name="post[longitude]" id="post_longitude" />
+        </form>
+        <ul id="messages">
+            <li>Guff 1</li>
+        </ul>
+	</div>
   </body>
 </html>
