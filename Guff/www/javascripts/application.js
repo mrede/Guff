@@ -4,9 +4,14 @@ function Guff() {
 Guff.prototype = {
     loc: null,
     watchId: null,
+    pusher: new Pusher('6b5e2c3e82788a7a4422'),
+    channel: null,
     
     init: function() {
+        //bind interactions
         this.postMessage();
+        this.refreshLocation();
+        //kick things off
         this.getLocation();
     },
     
@@ -18,10 +23,19 @@ Guff.prototype = {
         });
     },
     
+    refreshLocation: function() {
+        var o = this;
+        $("#refresh_location").bind("click", function(e) {
+            o.getLocation();
+        });
+    },
+    
     checkAccuracy: function(loc) {
         // put check in for accuracy location.coords.accuracy
         this.loc = loc;
         navigator.geolocation.clearWatch(this.watchId);
+        //
+        this.channel = this.pusher.subscribe('c'+this.loc.coords.latitude+'_'+this.loc.coords.longitude);
         this.setMap();
         this.getMessages();
     },
@@ -32,7 +46,7 @@ Guff.prototype = {
     
     getMessages: function() {
         var o = this;
-        var message_data = "http://guff.local/test.json"; //"http://guff.me.uk/post/messages/"+o.loc.coords.latitude+"/"+o.loc.coords.longitude;
+        var message_data = "http://guffserver.local/post/messages/"+this.loc.coords.latitude+"/"+this.loc.coords.longitude;
         $.ajax({
           type: 'POST',
           url: message_data,
@@ -55,32 +69,29 @@ Guff.prototype = {
     
     postMessage: function() {
         var o = this;
-        alert($('#post-message').attr('action'));
-        $('#post-message').off('submit');
-        $('#post-message').get(0).submit(function(){
+        $('#post-message').unbind('submit');
+        $('#post-message').on('submit', function(e){
             if ($('#post_text').attr('value').length>0) {
-            $.ajax({
-                 url: $('form').attr('action'),
-                 type: 'post',
-                 data: $('form').serialize(),
-                 dataType: 'json',
-                 success: function() { o.getMessages(); }
-            });
+                $.ajax({
+                     url: $('#post-message').attr('action'),
+                     type: 'post',
+                     data: $('#post-message').serialize() +'&sockID='+pusher.socket_id,
+                     dataType: 'json',
+                     timeout: 300,
+                     success: function() { o.getMessages(); }
+                });
+            } else {
+                o.errorHandler('user', 'You need to write something');
             }
             return false;
         });
-        // $('form').submit(function(){
-        //             if ($('#post_text').attr('value').length>0) {
-        //                 $.ajax({
-        //                     url: $('form').attr('action'),
-        //                     type: 'post',
-        //                     data: $('form').serialize(),
-        //                     dataType: 'json',
-        //                     success: function() { o.getMessages(); }
-        //                 });
-        //             }
-        //             return false;
-        //         });
+    },
+    
+    newMessage: function() {
+        var o = this;
+        this.channel.bind("new_guff", function(data) {
+            $("#messages").prepend("<li><p>"+data+"</p><span>"+o.remaningMessageTime(7200)+"</span></li>");
+         });  
     },
     
     remaningMessageTime: function(seconds) {
@@ -111,16 +122,19 @@ Guff.prototype = {
         case 'geo':
                 if (error.code>0) {
                     if (error.code===1) {
-                        $("#geo-fail").append("Denied");
+                        $("#error").append("Denied");
                     } else if (err.code===2) {
-                        $("#geo-fail").append("Position Unavailable");
+                        $("#error").append("Position Unavailable");
                     } else if (err.code===3) {
-                        $("#geo-fail").append("Timeout");
+                        $("#error").append("Timeout");
                     }
                 }
             break;
         case 'ajax':
                 //fill me in
+            break;
+        case 'user':
+                $("#error").append(error);
             break;
         }
         

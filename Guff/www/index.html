@@ -18,6 +18,7 @@
 	<script type="text/javascript" charset="utf-8" src="phonegap-1.3.0.js"></script>
 	
 	<!-- vendor libraries -->
+	<script src="http://js.pusherapp.com/1.8.2/pusher.min.js" type="text/javascript"></script>
 	<script src="/javascripts/vendor/zepto/zepto.js"></script>
     <script src="/javascripts/vendor/zepto/event.js"></script>
     <script src="/javascripts/vendor/zepto/ajax.js"></script>
@@ -60,12 +61,13 @@
   </head>
   <body onload="onBodyLoad()">
     <div class="container">
-        <button>Refresh Location</button>
+        <div id="error"></div>
+        <button id="refresh_location">Refresh Location</button>
         <img id="map" src="loading.gif" />
-        <form id="post-message" action="/message" method="post">
+        <form id="post-message" action="http://guffserver.local/message" method="post">
             <label for="post_text">Post a message [<span id="counter">148</span> characters]</label>
             <textarea rows="4" cols="30" name="post[text]" id="post_text"></textarea>
-            <input id='submit_but' data-inline="true" data-ajax="false" data-theme="b" class='button' type="submit" value="send"/>
+            <input type="submit" value="send"/>
             <em>Your message will be visible within a 200m range of here for 2hrs</em>
             <input type="hidden" name="post[id]" id="post_id" />
             <input type="hidden" name="post[accuracy]" id="post_accuracy" />
