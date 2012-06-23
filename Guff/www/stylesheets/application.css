@@ -1,0 +1,20 @@
+#locationButton {
+    left: 10px;
+    right: auto !important;
+}
+
+.button img {
+    padding-top: 5px;
+}
+
+#locationButton img, #locationRefresh img {
+    padding-top: 2px;
+}
+
+#jqt ul li {
+    background-color: #fff;
+}
+
+#map {
+    width: 100%;
+}
