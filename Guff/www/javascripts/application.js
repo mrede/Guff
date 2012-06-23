@@ -4,7 +4,7 @@ function Guff() {
 Guff.prototype = {
     loc: null,
     watchId: null,
-    pusher: new Pusher('6b5e2c3e82788a7a4422'),
+    //pusher: new Pusher('6b5e2c3e82788a7a4422'),
     channel: null,
     
     init: function() {
@@ -25,7 +25,7 @@ Guff.prototype = {
     
     refreshLocation: function() {
         var o = this;
-        $("#refresh_location").bind("click", function(e) {
+        $("#locationRefresh").on("click", function(e) {
             o.getLocation();
         });
     },
@@ -35,7 +35,7 @@ Guff.prototype = {
         this.loc = loc;
         navigator.geolocation.clearWatch(this.watchId);
         //
-        this.channel = this.pusher.subscribe('c'+this.loc.coords.latitude+'_'+this.loc.coords.longitude);
+        //this.channel = this.pusher.subscribe('c'+this.loc.coords.latitude+'_'+this.loc.coords.longitude);
         this.setMap();
         this.getMessages();
     },
@@ -46,7 +46,7 @@ Guff.prototype = {
     
     getMessages: function() {
         var o = this;
-        var message_data = "http://guffserver.local/post/messages/"+this.loc.coords.latitude+"/"+this.loc.coords.longitude;
+        var message_data = //"http://guff.local:4567/messages/"+this.loc.coords.latitude+"/"+this.loc.coords.longitude;
         $.ajax({
           type: 'POST',
           url: message_data,
@@ -60,7 +60,7 @@ Guff.prototype = {
     
     parseMessages: function(data) {
         var o = this;
-        var append;
+        var append = '';
         $(data.posts).each(function(){
             append += "<li><p>"+this.t+"</p><span>"+o.remaningMessageTime(this.e)+"</span></li>";
         });
@@ -69,16 +69,20 @@ Guff.prototype = {
     
     postMessage: function() {
         var o = this;
-        $('#post-message').unbind('submit');
-        $('#post-message').on('submit', function(e){
-            if ($('#post_text').attr('value').length>0) {
+        $('#send-guff').unbind('submit');
+        $('#send-guff').on('submit', function(e){
+            alert('submit');
+            if ($('#message').attr('value').length>0) {
                 $.ajax({
-                     url: $('#post-message').attr('action'),
-                     type: 'post',
-                     data: $('#post-message').serialize() +'&sockID='+pusher.socket_id,
-                     dataType: 'json',
+                     url: "http://guff.local:4567/send/?callback=?", //$('#send-guff').attr('action'),
+                     type: 'get',
+                     data: $('#send-guff').serialize(), //+'&sockID='+this.pusher.socket_id,
+                     dataType: 'jsonp',
                      timeout: 300,
-                     success: function() { o.getMessages(); }
+                     success: function(data) { 
+                        //o.getMessages(); 
+                        console.log(data);
+                     }
                 });
             } else {
                 o.errorHandler('user', 'You need to write something');
@@ -123,9 +127,9 @@ Guff.prototype = {
                 if (error.code>0) {
                     if (error.code===1) {
                         $("#error").append("Denied");
-                    } else if (err.code===2) {
+                    } else if (error.code===2) {
                         $("#error").append("Position Unavailable");
-                    } else if (err.code===3) {
+                    } else if (error.code===3) {
                         $("#error").append("Timeout");
                     }
                 }
@@ -141,10 +145,18 @@ Guff.prototype = {
     }
 };
 
-$(document).ready(function() {
+
+var jQT = new $.jQTouch({
+    icon: 'jqtouch.png',
+    addGlossToIcon: false,
+    startupScreen: '/images/apple-touch-icon.png',
+    statusBar: 'black'
+});
+
+$(function(){
     var guff = new Guff();
-    guff.init();   
-})
+    guff.init();
+});
 
 
 
