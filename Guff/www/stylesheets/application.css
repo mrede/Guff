@@ -17,4 +17,10 @@
 
 #map {
     width: 100%;
+    height: auto;
+}
+
+#map.loading {
+    width: 16px;
+    height: 16px;
 }

@@ -44,6 +44,7 @@ Guff.prototype = {
     
     setMap: function() {
         $("#map").attr("src", "http://maps.google.com/maps/api/staticmap?center="+this.loc.coords.latitude+","+this.loc.coords.longitude+"&zoom=15&size=200x200&maptype=roadmap&markers=color:blue|"+this.loc.coords.latitude+","+this.loc.coords.longitude+"&sensor=true");
+        $("#map").removeClass("loading");
     },
     
     getMessages: function() {
@@ -113,7 +114,6 @@ Guff.prototype = {
             } else {
                 time_message = 'under 2 hours left ';
             }
-            
         } else if (hours <= 1 && minutes > 30) {
             time_message = 'under 1 hour left';
         } else if (minutes <= 30 && minutes > 2) {
@@ -157,19 +157,6 @@ Guff.prototype = {
         
     }
 };
-
-
-var jQT = new $.jQTouch({
-    icon: 'jqtouch.png',
-    addGlossToIcon: false,
-    startupScreen: '/images/apple-touch-icon.png',
-    statusBar: 'black'
-});
-
-$(function(){
-    var guff = new Guff();
-    guff.init();
-});
 
 
 

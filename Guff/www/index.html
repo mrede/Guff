@@ -17,7 +17,6 @@
 	<script type="text/javascript" charset="utf-8" src="phonegap-1.3.0.js"></script>
 	
 	<!-- vendor libraries -->
-	<script src="http://js.pusherapp.com/1.8.2/pusher.min.js" type="text/javascript" type="text/javascript" charset="utf-8"></script>
     <script src="javascripts/vendor/jqtouch/zepto.jqtouch.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="javascripts/vendor/jqtouch/jqtouch.min.js" type="text/javascript" charset="utf-8"></script> 
     
@@ -52,8 +51,17 @@
             alert('Connection type: ' + states[networkState]);
             
             ///Remember to put the init call here once we are happy all is good
-            //var guff = new Guff();
-            //guff.init();
+            $(function(){
+                var guff = new Guff();
+                guff.init();
+            });
+            
+            var jQT = new $.jQTouch({
+                icon: 'jqtouch.png',
+                addGlossToIcon: false,
+                startupScreen: '/images/apple-touch-icon.png',
+                statusBar: 'black'
+            });
         }
     </script>  
   </head>
@@ -76,7 +84,7 @@
                 <a class="button slideup" href="#location" id="locationRefresh"><img src="images/01-refresh.png"></a>
             </div>
             <ul>
-                <li><img id="map" src="loading.gif" /></li>
+                <li><img id="map" src="images/loading.gif" class="loading" /></li>
             </ul>
         </div>
       <div id="post_message">
@@ -97,30 +105,5 @@
           </form>
       </div>
   </div>
-  
-  
-      
-    <!-- <div class="container">
-        <div id="error"></div>
-        <div id="map-location">
-        <img id="map" src="loading.gif" /><br/>
-        <button id="refresh_location">Refresh Location</button>
-        </div>
-        <form id="post-message" action="http://guffserver.local/message" method="post">
-            <label for="post_text">Post a message [<span id="counter">148</span> characters]</label>
-            <textarea rows="4" cols="30" name="post[text]" id="post_text"></textarea>
-            <input type="submit" value="send"/><br/>
-            <em>Your message will be visible within a 200m range of here for 2hrs</em>
-            <input type="hidden" name="post[id]" id="post_id" />
-            <input type="hidden" name="post[accuracy]" id="post_accuracy" />
-            <input type="hidden" name="post[latitude]" id="post_latitude" />
-            <input type="hidden" name="post[longitude]" id="post_longitude" />
-        </form>
-        <ul id="messages">
-            <li>Guff 1</li>
-            <li>Guff 2</li>
-            <li>Guff 3</li>
-        </ul>
-    </div> -->
   </body>
 </html>
