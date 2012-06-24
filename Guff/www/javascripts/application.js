@@ -4,8 +4,6 @@ function Guff() {
 Guff.prototype = {
     loc: null,
     watchId: null,
-    //pusher: new Pusher('6b5e2c3e82788a7a4422'),
-    channel: null,
     
     init: function() {
         //bind interactions
@@ -34,8 +32,12 @@ Guff.prototype = {
         // put check in for accuracy location.coords.accuracy
         this.loc = loc;
         navigator.geolocation.clearWatch(this.watchId);
-        //
-        //this.channel = this.pusher.subscribe('c'+this.loc.coords.latitude+'_'+this.loc.coords.longitude);
+        
+        //set hidden fields for message
+        $("#accuracy").attr('value', this.loc.coords.accuracy);
+        $("#latitude").attr('value', this.loc.coords.latitude);
+        $("#longitude").attr('value', this.loc.coords.longitude);
+        
         this.setMap();
         this.getMessages();
     },
@@ -46,9 +48,10 @@ Guff.prototype = {
     
     getMessages: function() {
         var o = this;
-        var message_data = //"http://guff.local:4567/messages/"+this.loc.coords.latitude+"/"+this.loc.coords.longitude;
+        var message_data = "http://guff.local:4567/messages/"+this.loc.coords.latitude+"/"+this.loc.coords.longitude;
+        console.log(message_data);
         $.ajax({
-          type: 'POST',
+          type: 'get',
           url: message_data,
           dataType: 'json',
           timeout: 300,
@@ -61,27 +64,28 @@ Guff.prototype = {
     parseMessages: function(data) {
         var o = this;
         var append = '';
-        $(data.posts).each(function(){
-            append += "<li><p>"+this.t+"</p><span>"+o.remaningMessageTime(this.e)+"</span></li>";
+        $(data).each(function(){
+            console.log(this.message);
+            append += "<li><p>"+this.message+"</p><span>"+o.remaningMessageTime(7190)+"</span></li>";
         });
         $("#messages").html(append);
     },
-    
+        
     postMessage: function() {
         var o = this;
         $('#send-guff').unbind('submit');
         $('#send-guff').on('submit', function(e){
-            alert('submit');
+            console.log($('#send-guff').serialize());   
             if ($('#message').attr('value').length>0) {
                 $.ajax({
-                     url: "http://guff.local:4567/send/?callback=?", //$('#send-guff').attr('action'),
-                     type: 'get',
-                     data: $('#send-guff').serialize(), //+'&sockID='+this.pusher.socket_id,
-                     dataType: 'jsonp',
+                     url: $('#send-guff').attr('action'),
+                     type: 'post',
+                     data: $('#send-guff').serialize(),
+                     dataType: 'json',
                      timeout: 300,
                      success: function(data) { 
-                        //o.getMessages(); 
-                        console.log(data);
+                        o.notificationHandler('success','Message posted');
+                        o.getMessages(); 
                      }
                 });
             } else {
@@ -118,6 +122,15 @@ Guff.prototype = {
             time_message = 'nearly outta here';
         }
         return time_message;
+    },
+    
+    notificationHandler: function(type, message) {
+      switch(type)
+      {
+          case 'success':
+                console.log(message);
+            break;
+      }  
     },
     
     errorHandler: function(type, error) {

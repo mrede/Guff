@@ -5,14 +5,9 @@
   
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
 	<meta charset="utf-8">
-
-    <!-- <link rel="stylesheet" href="stylesheets/base.css">
-    <link rel="stylesheet" href="stylesheets/skeleton.css">
-    <link rel="stylesheet" href="stylesheets/layout.css">
-    <link rel="stylesheet" href="stylesheets/application.css"> -->
 	
-	<link rel="stylesheet" href="/stylesheets/vendor/jqtouch/vanilla.css">
-	<link rel="stylesheet" href="/stylesheets/application.css">
+	<link rel="stylesheet" href="stylesheets/vendor/jqtouch/vanilla.css">
+	<link rel="stylesheet" href="stylesheets/application.css">
     
 	<!-- iPad/iPhone specific css below, add after your main css >
 	<link rel="stylesheet" media="only screen and (max-device-width: 1024px)" href="ipad.css" type="text/css" />		
@@ -23,13 +18,11 @@
 	
 	<!-- vendor libraries -->
 	<script src="http://js.pusherapp.com/1.8.2/pusher.min.js" type="text/javascript" type="text/javascript" charset="utf-8"></script>
-    <!-- <script src="/javascripts/vendor/zepto/event.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/javascripts/vendor/zepto/ajax.js" type="text/javascript" charset="utf-8"></script>-->
-    <script src="/javascripts/vendor/jqtouch/zepto.jqtouch.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="/javascripts/vendor/jqtouch/jqtouch.min.js" type="text/javascript" charset="utf-8"></script> 
+    <script src="javascripts/vendor/jqtouch/zepto.jqtouch.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="javascripts/vendor/jqtouch/jqtouch.min.js" type="text/javascript" charset="utf-8"></script> 
     
     <!-- application -->
-    <script src="/javascripts/application.js"></script>
+    <script src="javascripts/application.js"></script>
     
     <script type='text/javascript'>
         function onBodyLoad()
@@ -39,7 +32,7 @@
         
         function onDeviceReady()
         {
-        	navigator.notification.alert("PhoneGap is working");
+        	//navigator.notification.alert("PhoneGap is working");
         	checkConnection();
         }
         
@@ -69,8 +62,8 @@
       <div id="home">
           <div class="toolbar">
               <h1>Guff</h1>
-              <a class="button slideup" id="infoButton" href="#post_message"><img src="/images/08-chat.png"></a>
-              <a class="button slideup" id="locationButton" href="#location"><img src="/images/07-map-marker.png"></a>
+              <a class="button slideup" id="infoButton" href="#post_message"><img src="images/08-chat.png"></a>
+              <a class="button slideup" id="locationButton" href="#location"><img src="images/07-map-marker.png"></a>
           </div>
           <ul id="messages">
               <li>No Guffs at this location</li>
@@ -80,7 +73,7 @@
             <div class="toolbar">
                 <h1>Location</h1>
                 <a class="back" href="#">cancel</a>
-                <a class="button slideup" href="#location" id="locationRefresh"><img src="/images/01-refresh.png"></a>
+                <a class="button slideup" href="#location" id="locationRefresh"><img src="images/01-refresh.png"></a>
             </div>
             <ul>
                 <li><img id="map" src="loading.gif" /></li>
@@ -92,15 +85,15 @@
                 <a class="back" href="#">cancel</a>
           </div>
           
-          <form id="send-guff" action="http://guff.local:4567/send" method="get">
+          <form id="send-guff" action="http://guff.local:4567/send" method="post">
               <ul class="edit rounded">
                   <li><label for="post_text">Post a message [<span id="counter">148</span> characters]</label></li>
                   <li><textarea rows="4" cols="30" name="message" id="message"></textarea></li>
                   <li><input type="submit" value="send" class="whiteButton"/></li>
                   <li><em>Your message will be visible within a 200m range of here for 2hrs</em></li>
-                  <input type="hidden" name="accuracy" id="accuracy" />
-                  <input type="hidden" name="latitude" id="latitude" />
-                  <input type="hidden" name="longitude" id="longitude" />
+                  <input type="hidden" name="accuracy" id="accuracy" value="" />
+                  <input type="hidden" name="latitude" id="latitude" value="" />
+                  <input type="hidden" name="longitude" id="longitude" value="" />
           </form>
       </div>
   </div>
