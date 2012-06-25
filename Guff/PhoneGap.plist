@@ -15,11 +15,12 @@
 	<key>MediaPlaybackRequiresUserAction</key>
 	<true/>
 	<key>AllowInlineMediaPlayback</key>
-	<false/>
+	<true/>
 	<key>OpenAllWhitelistURLsInWebView</key>
 	<false/>
 	<key>ExternalHosts</key>
 	<array>
+		<string>guff.local</string>
 		<string>maps.google.com</string>
 	</array>
 	<key>Plugins</key>

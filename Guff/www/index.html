@@ -51,17 +51,17 @@
             alert('Connection type: ' + states[networkState]);
             
             ///Remember to put the init call here once we are happy all is good
-            $(function(){
-                var guff = new Guff();
-                guff.init();
-            });
-            
-            var jQT = new $.jQTouch({
-                icon: 'jqtouch.png',
-                addGlossToIcon: false,
-                startupScreen: '/images/apple-touch-icon.png',
-                statusBar: 'black'
-            });
+            // $(function(){
+            //                 var guff = new Guff();
+            //                 guff.init();
+            //             });
+            //             
+            //             var jQT = new $.jQTouch({
+            //                 icon: 'jqtouch.png',
+            //                 addGlossToIcon: false,
+            //                 startupScreen: '/images/apple-touch-icon.png',
+            //                 statusBar: 'black'
+            //             });
         }
     </script>  
   </head>
@@ -74,7 +74,7 @@
               <a class="button slideup" id="locationButton" href="#location"><img src="images/07-map-marker.png"></a>
           </div>
           <ul id="messages">
-              <li>No Guffs at this location</li>
+              <li><img id="map" src="images/loading.gif" class="loading" /> Getting location</li>
           </ul>
       </div>
       <div id="location">
@@ -84,18 +84,18 @@
                 <a class="button slideup" href="#location" id="locationRefresh"><img src="images/01-refresh.png"></a>
             </div>
             <ul>
-                <li><img id="map" src="images/loading.gif" class="loading" /></li>
+                <li id="map"><img src="images/loading.gif" id="loading" /><span></span></li>
             </ul>
         </div>
       <div id="post_message">
           <div class="toolbar">
                 <h1>New Guff</h1>
-                <a class="back" href="#">cancel</a>
+                <a class="back" id="back" href="#">cancel</a>
           </div>
           
           <form id="send-guff" action="http://guff.local:4567/send" method="post">
               <ul class="edit rounded">
-                  <li><label for="post_text">Post a message [<span id="counter">148</span> characters]</label></li>
+                  <li><label for="post_text">Post a message [<span id="counter">148</span>]</label></li>
                   <li><textarea rows="4" cols="30" name="message" id="message"></textarea></li>
                   <li><input type="submit" value="send" class="whiteButton"/></li>
                   <li><em>Your message will be visible within a 200m range of here for 2hrs</em></li>

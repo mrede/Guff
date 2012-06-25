@@ -4,53 +4,73 @@ function Guff() {
 Guff.prototype = {
     loc: null,
     watchId: null,
+    maxchars: 141,
     
     init: function() {
         //bind interactions
         this.postMessage();
         this.refreshLocation();
+        this.countDown();
         //kick things off
         this.getLocation();
     },
     
     getLocation: function() {
+        console.log('getting location');
         var o = this;
-        this.watchId = navigator.geolocation.watchPosition(function(loc) { o.checkAccuracy(loc); }, function(error) { o.errorHandler('geo', error); }, {
+        console.log(this.watchId);
+        this.watchId = navigator.geolocation.watchPosition(function(loc) {  o.checkAccuracy(loc); }, function(error) { o.errorHandler('geo', error); }, {
             enableHighAccuracy: true,
-            maximumAge: 0
+            maximumAge: 1000
         });
     },
     
     refreshLocation: function() {
         var o = this;
         $("#locationRefresh").on("click", function(e) {
+            console.log('refreshing location');
             o.getLocation();
         });
     },
     
     checkAccuracy: function(loc) {
         // put check in for accuracy location.coords.accuracy
-        this.loc = loc;
-        navigator.geolocation.clearWatch(this.watchId);
-        
-        //set hidden fields for message
-        $("#accuracy").attr('value', this.loc.coords.accuracy);
-        $("#latitude").attr('value', this.loc.coords.latitude);
-        $("#longitude").attr('value', this.loc.coords.longitude);
-        
-        this.setMap();
-        this.getMessages();
+        console.log('checking accuracy');
+        console.log('accuracy at: ' + loc.coords.accuracy);
+        if(loc.coords.accuracy < 100) {
+            console.log('accurate location obtained');
+            console.log(loc.coords.accuracy);
+            navigator.geolocation.clearWatch(this.watchId); 
+            this.loc = loc;
+            
+            //set hidden fields for message
+            $("#accuracy").attr('value', this.loc.coords.accuracy);
+            $("#latitude").attr('value', this.loc.coords.latitude);
+            $("#longitude").attr('value', this.loc.coords.longitude);
+            
+            this.setMap();
+            this.getMessages();
+        }
     },
     
     setMap: function() {
-        $("#map").attr("src", "http://maps.google.com/maps/api/staticmap?center="+this.loc.coords.latitude+","+this.loc.coords.longitude+"&zoom=15&size=200x200&maptype=roadmap&markers=color:blue|"+this.loc.coords.latitude+","+this.loc.coords.longitude+"&sensor=true");
-        $("#map").removeClass("loading");
+        console.log('setting map:' + this.loc.coords.latitude + this.loc.coords.longitude);
+        $("#loading").show();
+        var img = new Image();
+        img.src = "http://maps.google.com/maps/api/staticmap?center="+this.loc.coords.latitude+","+this.loc.coords.longitude+"&zoom=15&size=200x200&maptype=roadmap&markers=color:blue|"+this.loc.coords.latitude+","+this.loc.coords.longitude+"&sensor=true";
+        console.log(img.src);
+        img.onload = function() {
+            console.log('loaded map image from google');
+            $("#loading").hide();
+            $("#map span").html(img);
+            $(img).css({width: '100%', height: 'auto'});
+        }
     },
     
     getMessages: function() {
+        console.log('getting messages');
         var o = this;
         var message_data = "http://guff.local:4567/messages/"+this.loc.coords.latitude+"/"+this.loc.coords.longitude;
-        console.log(message_data);
         $.ajax({
           type: 'get',
           url: message_data,
@@ -66,7 +86,6 @@ Guff.prototype = {
         var o = this;
         var append = '';
         $(data).each(function(){
-            console.log(this.message);
             append += "<li><p>"+this.message+"</p><span>"+o.remaningMessageTime(7190)+"</span></li>";
         });
         $("#messages").html(append);
@@ -86,6 +105,9 @@ Guff.prototype = {
                      timeout: 300,
                      success: function(data) { 
                         o.notificationHandler('success','Message posted');
+                        
+                        $("#back").trigger('click');
+                        o.resetMessageField();
                         o.getMessages(); 
                      }
                 });
@@ -96,11 +118,31 @@ Guff.prototype = {
         });
     },
     
+    resetMessageField: function() {
+        $("#message").val('');
+        $("#counter").html(this.maxchars);
+    },
+    
     newMessage: function() {
         var o = this;
         this.channel.bind("new_guff", function(data) {
             $("#messages").prepend("<li><p>"+data+"</p><span>"+o.remaningMessageTime(7200)+"</span></li>");
          });  
+    },
+    
+    countDown: function() {
+        var o = this;
+        $('#message').bind('keydown', function(e) {
+            text = $(this).val();
+            noc = text.length;
+            chars_left = o.maxchars - noc;
+            $("#counter").html(chars_left);
+            if(noc > o.maxchars) {
+                $("#counter").css('color', 'red');
+            } else {
+                $("#counter").css('color', '#4D4D4D');
+            }
+        });
     },
     
     remaningMessageTime: function(seconds) {
@@ -157,6 +199,18 @@ Guff.prototype = {
         
     }
 };
+
+$(function(){
+    var guff = new Guff();
+    guff.init();
+});
+
+var jQT = new $.jQTouch({
+    icon: 'jqtouch.png',
+    addGlossToIcon: false,
+    startupScreen: '/images/apple-touch-icon.png',
+    statusBar: 'black'
+});
 
 
 
