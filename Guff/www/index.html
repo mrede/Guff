@@ -47,21 +47,21 @@
             states[Connection.CELL_3G]  = 'Cell 3G connection';
             states[Connection.CELL_4G]  = 'Cell 4G connection';
             states[Connection.NONE]     = 'No network connection';
-
-            alert('Connection type: ' + states[networkState]);
             
             ///Remember to put the init call here once we are happy all is good
-            // $(function(){
-            //                 var guff = new Guff();
-            //                 guff.init();
-            //             });
-            //             
-            //             var jQT = new $.jQTouch({
-            //                 icon: 'jqtouch.png',
-            //                 addGlossToIcon: false,
-            //                 startupScreen: '/images/apple-touch-icon.png',
-            //                 statusBar: 'black'
-            //             });
+            $(function(){
+                var guff = new Guff();
+                guff.init();
+            });
+            
+            var jQT = new $.jQTouch({
+                icon: 'jqtouch.png',
+                addGlossToIcon: false,
+                startupScreen: '/images/apple-touch-icon.png',
+                statusBar: 'black',
+                fixedViewport: true,
+                formSelector: '.form'
+            });
         }
     </script>  
   </head>
@@ -93,9 +93,9 @@
                 <a class="back" id="back" href="#">cancel</a>
           </div>
           
-          <form id="send-guff" action="http://guff.local:4567/send" method="post">
+          <form id="send-guff" class="scroll" action="http://guff.local:4567/send" method="post">
               <ul class="edit rounded">
-                  <li><label for="post_text">Post a message [<span id="counter">148</span>]</label></li>
+                  <li><label for="post_text">Post a message [<span id="counter">141</span>]</label></li>
                   <li><textarea rows="4" cols="30" name="message" id="message"></textarea></li>
                   <li><input type="submit" value="send" class="whiteButton"/></li>
                   <li><em>Your message will be visible within a 200m range of here for 2hrs</em></li>

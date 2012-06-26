@@ -5,7 +5,7 @@ require 'data_mapper'
 require 'json'
 
 configure :development do
-  #DataMapper.setup :default, "sqlite://#{Dir.pwd}/development.db"
+  enable :logging, :dump_errors, :raise_errors
   DataMapper.setup(:default, 'mysql://guff:guff@127.0.0.1/guff')
 end
 
@@ -17,7 +17,7 @@ class Message
   
   property :id, Serial
   property :ip, String
-  property :message, String
+  property :message, String, :length => 141
   property :accuracy, String
   property :latitude, String
   property :longitude, String
@@ -39,7 +39,7 @@ get '/messages/:latitude/:longitude' do
 end
 
 post '/send' do
-  
+  response['Access-Control-Allow-Origin'] = "*"
   @message = Message.create(
     :message      => params[:message],
     :accuracy       => params[:accuracy],
@@ -49,9 +49,8 @@ post '/send' do
     :created_at => Time.now
   )
   if @message.save
-    response['Access-Control-Allow-Origin'] = "*"
     content_type :json
     { :success_message => 'Message posted' }.to_json
   end
-  
+  puts "params: " + params.inspect
 end
