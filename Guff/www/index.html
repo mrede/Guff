@@ -49,19 +49,19 @@
             states[Connection.NONE]     = 'No network connection';
             
             ///Remember to put the init call here once we are happy all is good
-            $(function(){
-                var guff = new Guff();
-                guff.init();
-            });
-            
-            var jQT = new $.jQTouch({
-                icon: 'jqtouch.png',
-                addGlossToIcon: false,
-                startupScreen: '/images/apple-touch-icon.png',
-                statusBar: 'black',
-                fixedViewport: true,
-                formSelector: '.form'
-            });
+            // $(function(){
+            //     var guff = new Guff();
+            //     guff.init();
+            // });
+            // 
+            // var jQT = new $.jQTouch({
+            //     icon: 'jqtouch.png',
+            //     addGlossToIcon: false,
+            //     startupScreen: '/images/apple-touch-icon.png',
+            //     statusBar: 'black',
+            //     fixedViewport: true,
+            //     formSelector: '.form'
+            // });
         }
     </script>  
   </head>
@@ -73,6 +73,8 @@
               <a class="button slideup" id="infoButton" href="#post_message"><img src="images/08-chat.png"></a>
               <a class="button slideup" id="locationButton" href="#location"><img src="images/07-map-marker.png"></a>
           </div>
+          <div class="info scroll" id="error"></div>
+          <a class="button" id="follow" href="#">Follow</a>
           <ul id="messages">
               <li><img id="map" src="images/loading.gif" class="loading" /> Getting location</li>
           </ul>
@@ -83,6 +85,7 @@
                 <a class="back" href="#">cancel</a>
                 <a class="button slideup" href="#location" id="locationRefresh"><img src="images/01-refresh.png"></a>
             </div>
+            <div class="info scroll" id="error"></div>
             <ul>
                 <li id="map"><img src="images/loading.gif" id="loading" /><span></span></li>
             </ul>
@@ -92,7 +95,7 @@
                 <h1>New Guff</h1>
                 <a class="back" id="back" href="#">cancel</a>
           </div>
-          
+          <div class="info scroll" id="error"></div>
           <form id="send-guff" class="scroll" action="http://guff.local:4567/send" method="post">
               <ul class="edit rounded">
                   <li><label for="post_text">Post a message [<span id="counter">141</span>]</label></li>

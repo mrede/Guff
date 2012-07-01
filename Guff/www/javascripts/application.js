@@ -19,7 +19,7 @@ Guff.prototype = {
         console.log('getting location');
         var o = this;
         console.log(this.watchId);
-        this.watchId = navigator.geolocation.watchPosition(function(loc) {  o.checkAccuracy(loc); }, function(error) { o.errorHandler('geo', error); }, {
+        this.watchId = navigator.geolocation.watchPosition(function(loc) {  o.checkAccuracy(loc); }, function(error) { o.errorHandler('geo', 'Unable to get location', error); }, {
             enableHighAccuracy: true,
             maximumAge: 1000
         });
@@ -30,6 +30,26 @@ Guff.prototype = {
         $("#locationRefresh").on("click", function(e) {
             console.log('refreshing location');
             o.getLocation();
+        });
+    },
+    
+    followLocation: function() {
+        var o = this;
+        fb = $("#follow");
+        fb.show();
+        fb.on('click',function() {
+            //1mb db, probably far more than needed
+            var db = window.openDatabase('guff_followed_locations', "1.0", 'Guff DB', 1048576);
+            db.transaction(function(tx) {
+               tx.executeSql('CREATE TABLE IF NOT EXISTS followed_locations (id INTEGER PRIMARY KEY AUTOINCREMENT, latitude, longitude)');
+               tx.executeSql('INSERT INTO followed_locations (latitude, longitude) VALUES ('+o.loc.coords.latitude+','+o.loc.coords.longitude+')');
+            },
+            function(err) {
+               o.errorHandler('db', 'Error storing location', err);
+            },
+            function(){
+               o.notificationHandler('success', 'Location saved');
+            });
         });
     },
     
@@ -50,6 +70,7 @@ Guff.prototype = {
             
             this.setMap();
             this.getMessages();
+            //this.followLocation();
         }
     },
     
@@ -109,7 +130,7 @@ Guff.prototype = {
                      }
                 });
             } else {
-                o.errorHandler('user', 'You need to write something');
+                o.errorHandler('user', 'You need to write something', '');
             }
             return false;
         });
@@ -121,6 +142,7 @@ Guff.prototype = {
     },
     
     newMessage: function() {
+        //needs to be changed for new push updates
         var o = this;
         this.channel.bind("new_guff", function(data) {
             $("#messages").prepend("<li><p>"+data+"</p><span>"+o.remaningMessageTime(7200)+"</span></li>");
@@ -172,7 +194,7 @@ Guff.prototype = {
       }  
     },
     
-    errorHandler: function(type, error) {
+    errorHandler: function(type, message, error) {
         switch(type)
         {
         case 'geo':
@@ -187,26 +209,30 @@ Guff.prototype = {
                 }
             break;
         case 'ajax':
-                //fill me in
+                $("#error").append(message);
             break;
         case 'user':
-                $("#error").append(error);
+                $("#error").append(message);
+            break;
+        case 'db':
+                $("#error").append(message);
+                console.log(error);
             break;
         }
         
     }
 };
 
-// $(function(){
-//     var guff = new Guff();
-//     guff.init();
-// });
-// 
-// var jQT = new $.jQTouch({
-//     icon: 'jqtouch.png',
-//     addGlossToIcon: false,
-//     startupScreen: '/images/apple-touch-icon.png',
-//     statusBar: 'black',
-//     fixedViewport: true,
-//     formSelector: '.form'
-// });
+$(function(){
+    var guff = new Guff();
+    guff.init();
+});
+
+var jQT = new $.jQTouch({
+    icon: 'jqtouch.png',
+    addGlossToIcon: false,
+    startupScreen: '/images/apple-touch-icon.png',
+    statusBar: 'black',
+    fixedViewport: true,
+    formSelector: '.form'
+});
