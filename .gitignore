@@ -1,2 +1,11 @@
 log/*
 cache/*
+build
+Classes
+Plugins
+Resources
+Guff-Info.plist
+Guff-Prefix.pch
+main-m
+PhoneGap.plist
+PhoneGapBuildSettings.xcconfig

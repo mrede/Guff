@@ -74,7 +74,6 @@
               <a class="button slideup" id="locationButton" href="#location"><img src="images/07-map-marker.png"></a>
           </div>
           <div class="info scroll" id="error"></div>
-          <a class="button" id="follow" href="#">Follow</a>
           <ul id="messages">
               <li><img id="map" src="images/loading.gif" class="loading" /> Getting location</li>
           </ul>
@@ -96,7 +95,7 @@
                 <a class="back" id="back" href="#">cancel</a>
           </div>
           <div class="info scroll" id="error"></div>
-          <form id="send-guff" class="scroll" action="http://guff.local:4567/send" method="post">
+          <form id="send-guff" class="scroll" action="http://guff.herokuapp.com/send" method="post">
               <ul class="edit rounded">
                   <li><label for="post_text">Post a message [<span id="counter">141</span>]</label></li>
                   <li><textarea rows="4" cols="30" name="message" id="message"></textarea></li>

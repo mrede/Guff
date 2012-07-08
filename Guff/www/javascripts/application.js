@@ -7,7 +7,7 @@ Guff.prototype = {
     maxchars: 141,
     
     init: function() {
-        //bind interactions
+        //bind interactions - ******this should probably be moved till after we are happy with accuracy******
         this.postMessage();
         this.refreshLocation();
         this.countDown();
@@ -18,7 +18,6 @@ Guff.prototype = {
     getLocation: function() {
         console.log('getting location');
         var o = this;
-        console.log(this.watchId);
         this.watchId = navigator.geolocation.watchPosition(function(loc) {  o.checkAccuracy(loc); }, function(error) { o.errorHandler('geo', 'Unable to get location', error); }, {
             enableHighAccuracy: true,
             maximumAge: 1000
@@ -33,49 +32,29 @@ Guff.prototype = {
         });
     },
     
-    followLocation: function() {
-        var o = this;
-        fb = $("#follow");
-        fb.show();
-        fb.on('click',function() {
-            //1mb db, probably far more than needed
-            var db = window.openDatabase('guff_followed_locations', "1.0", 'Guff DB', 1048576);
-            db.transaction(function(tx) {
-               tx.executeSql('CREATE TABLE IF NOT EXISTS followed_locations (id INTEGER PRIMARY KEY AUTOINCREMENT, latitude, longitude)');
-               tx.executeSql('INSERT INTO followed_locations (latitude, longitude) VALUES ('+o.loc.coords.latitude+','+o.loc.coords.longitude+')');
-            },
-            function(err) {
-               o.errorHandler('db', 'Error storing location', err);
-            },
-            function(){
-               o.notificationHandler('success', 'Location saved');
-            });
-        });
-    },
-    
     checkAccuracy: function(loc) {
         // put check in for accuracy location.coords.accuracy
         console.log('checking accuracy');
         console.log('accuracy at: ' + loc.coords.accuracy);
         if(loc.coords.accuracy < 100) {
             console.log('accurate location obtained');
-            console.log(loc.coords.accuracy);
+            console.log('accuracy at: '+loc.coords.accuracy);
             navigator.geolocation.clearWatch(this.watchId); 
             this.loc = loc;
             
-            //set hidden fields for message
+            //set hidden fields for message form
             $("#accuracy").attr('value', this.loc.coords.accuracy);
             $("#latitude").attr('value', this.loc.coords.latitude);
             $("#longitude").attr('value', this.loc.coords.longitude);
             
+            //bind interactions etc
             this.setMap();
             this.getMessages();
-            //this.followLocation();
         }
     },
     
     setMap: function() {
-        console.log('setting map:' + this.loc.coords.latitude + this.loc.coords.longitude);
+        console.log('setting map: ' + this.loc.coords.latitude + this.loc.coords.longitude);
         $("#loading").show();
         var img = new Image();
         img.src = "http://maps.google.com/maps/api/staticmap?center="+this.loc.coords.latitude+","+this.loc.coords.longitude+"&zoom=15&size=200x200&maptype=roadmap&markers=color:blue|"+this.loc.coords.latitude+","+this.loc.coords.longitude+"&sensor=true";
@@ -91,15 +70,16 @@ Guff.prototype = {
     getMessages: function() {
         console.log('getting messages');
         var o = this;
-        var message_data = "http://guff.local:4567/messages/"+this.loc.coords.latitude+"/"+this.loc.coords.longitude;
+        var message_data = "http://guff.herokuapp.com/messages/"+this.loc.coords.latitude+"/"+this.loc.coords.longitude;
+        console.log(message_data);
         $.ajax({
           type: 'get',
           url: message_data,
           dataType: 'json',
-          timeout: 300,
+          timeout: 8000,
           context: $('body'),
           success: function(data){ o.parseMessages(data); },
-          error: function(xhr, type){ o.errorHandler('ajax', xhr, type); }
+          error: function(xhr, type){ console.log(type); }//o.errorHandler('ajax', xhr, type); }
         });
     },
     
@@ -113,6 +93,7 @@ Guff.prototype = {
     },
         
     postMessage: function() {
+        console.log('posting message');
         var o = this;
         $('#send-guff').on('submit', function(e){
             if ($('#message').attr('value').length>0) {
@@ -121,8 +102,9 @@ Guff.prototype = {
                      type: 'post',
                      data: $('#send-guff').serialize(),
                      dataType: 'json',
-                     timeout: 300,
+                     timeout: 8000,
                      success: function(data) { 
+                        console.log('message posted successfully');
                         o.notificationHandler('success','Message posted');
                         $("#back").trigger('click');
                         o.resetMessageField();
